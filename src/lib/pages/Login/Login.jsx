@@ -1,5 +1,5 @@
 import React from "react";
-import LoginForm from '../../molecules/LoginForm';
+import LoginForm from '../../molecules/Forms/LoginForm';
 
 function Login() {
 	return (

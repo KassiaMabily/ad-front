@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { withRouter, Link } from "react-router-dom";
 import './style.css';
-
+import { login } from "../../../services/auth"; 
 import { connect } from "react-redux";
-import * as authActions from "../../../redux/actions/Auth";
+import * as authActions from "../../../../redux/actions/Auth";
 import { bindActionCreators } from "redux";
 
 function LoginForm({ history, login }) {
@@ -19,11 +19,8 @@ function LoginForm({ history, login }) {
             setError("Preencha todos os campos para continuar!");
         } else {
             try {
-
-                login(user, password).then(
-                    //history.push('/');
-                );
-
+                const data = await login(user, password);
+                history.push('/');
             } catch (err) {
                 console.log(err)
                 setError("Houve um problema com o login, verifique suas credenciais.");
