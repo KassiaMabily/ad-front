@@ -14,7 +14,7 @@ function Courses({ history }){
                 history.go(1);
             });
         }
-    }, []);
+    }, [history]);
 
     
 

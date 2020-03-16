@@ -82,7 +82,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function Navbar({ openMenu, nameCourse, perfil }) {
+function Navbar({ openMenu, nameCourse }) {
 
     
     const classes = useStyles();
@@ -218,8 +218,8 @@ function Navbar({ openMenu, nameCourse, perfil }) {
 }
 
 
-const mapStateToProps = state => ({
-	perfil: state.perfilState.perfil,
-});
+// const mapStateToProps = state => ({
+// 	perfil: state.perfilState.perfil,
+// });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect()(Navbar);
