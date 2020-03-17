@@ -9,7 +9,7 @@ import { getUserCourses } from "../../../redux/actions/CourseActions";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 
-function Courses({ history, getUser, getUserCourses }){
+function Courses({ getUser, getUserCourses }){
 
     useEffect(() =>
     {

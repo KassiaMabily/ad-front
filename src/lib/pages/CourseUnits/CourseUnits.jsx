@@ -7,30 +7,33 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 
 import ContainerCourseUnits from '../../organisms/ContainerCourseUnits';
+import { COURSE_KEY, getKey } from '../../services/auth';
 
-function CourseUnits({ history, getUserCourseUnits }){
+function CourseUnits({ current_course_units, getUserCourseUnits }){
 
-    const { nameCourse, hashCourse } = history.location.state;
+    console.log(current_course_units);
 
     useEffect(() =>
     {
-        async function listcourseunits(hashCourse) {
-            await getUserCourseUnits(hashCourse);
+        async function listcourseunits() {
+            const hash = getKey(COURSE_KEY);
+            await getUserCourseUnits(hash);
         }
-        listcourseunits(hashCourse);
-    }, [ getUserCourseUnits, hashCourse ]);
+        listcourseunits();
+    }, [ getUserCourseUnits ]);
+    
 
     return (
         <div className="bgContainerHome" style={{ backgroundColor: '#F8F8FD' }}>
-            <Navbar openMenu={false} nameCourse={nameCourse} />
-            <ContainerCourseUnits title={nameCourse} />
+            <Navbar openMenu={false} nameCourse={"ADGROUP"} />
+            <ContainerCourseUnits title={current_course_units.nameCourse} />
         </div >
     )
 
 }
 
 const mapStateToProps = state => ({
-    current_course_units: state.courseState.courses,
+    current_course_units: state.courseState.current_course_units,
 });
 
 const mapDispatchToProps = dispatch =>

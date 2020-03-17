@@ -1,5 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { withRouter } from "react-router-dom";
+
+import { getUnit } from "../../../redux/actions/CourseActions";
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux';
+
+import { COURSE_KEY, UNIT_KEY, getKey } from '../../services/auth';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -38,10 +45,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function PanelClass({ aulas, handleChange, expanded, nameCourse, finished }) {
+function PanelClass({ history, aulas, nameCourse, finished, slug_course }) {
     const classes = useStyles();
 
-    console.log(aulas)
+    const unitClick = async (modulo, unit) => {
+        if(!unit.is_lock){
+            localStorage.setItem(UNIT_KEY, unit.hash);
+            const hash = getKey(COURSE_KEY);
+            history.push({ pathname: `${slug_course}/${modulo.slug}/${unit.slug}` })
+        }
+    }
+
     const sideList = (aulas) => (
         <div>
             {
@@ -72,7 +86,7 @@ export default function PanelClass({ aulas, handleChange, expanded, nameCourse, 
                         <List>
                             {item.units.map((unit, index2) => {
                                 return (
-                                    <ListItem button key={`panel-${index}-listitem-${index2}`} style={{ cursor: unit.is_lock ? 'not-allowed' : 'pointer' }}>
+                                    <ListItem onClick={() => unitClick(item, unit)} button key={`panel-${index}-listitem-${index2}`} style={{ cursor: unit.is_lock ? 'not-allowed' : 'pointer' }}>
                                         <ListItemIcon> 
                                             {
                                                 unit.finished ? 
@@ -98,9 +112,11 @@ export default function PanelClass({ aulas, handleChange, expanded, nameCourse, 
 
 
 
-  return (
-    <div >
-        {sideList(aulas)}
-    </div>
-  );
+    return (
+        <div >
+            {sideList(aulas)}
+        </div>
+    );
 }
+
+export default withRouter(PanelClass);

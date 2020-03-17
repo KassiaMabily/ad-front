@@ -6,7 +6,7 @@ import { isAuthenticated } from "../services/auth";
 import Login from "../pages/Login";
 import Courses from "../pages/Courses";
 import CourseUnits from "../pages/CourseUnits";
-
+import CourseUnitClass from "../pages/CourseUnitClass";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
 	
@@ -30,6 +30,7 @@ function App() {
 				<Route path="/login" component={Login} />
 				<PrivateRoute exact path="/" component={Courses} />
 				<PrivateRoute exact path="/:slug_course" component={CourseUnits} />
+				<PrivateRoute exact path="/:slug_course/:slug_modulo/:slug_class" component={CourseUnitClass} />
 			</Switch>
 		</BrowserRouter>
 	);

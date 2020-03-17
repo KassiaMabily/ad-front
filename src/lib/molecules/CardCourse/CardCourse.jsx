@@ -1,10 +1,12 @@
 import React from 'react';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import './styles.css';
+
+import { COURSE_KEY } from '../../services/auth';
 
 import Info from '@material-ui/icons/Info';
 
@@ -28,11 +30,8 @@ function CardCourse({ item_course, type, index, history }) {
     const classes = useStyles();
 
     const courseClick = async (course) => {
-
-        history.push({
-            pathname: `${course.slug}`,
-            state: { hashCourse: course.hash, nameCourse: course.title }
-        })
+        localStorage.setItem(COURSE_KEY, course.hash);
+        history.push({ pathname: `${course.slug}` })
 
     }
 
@@ -40,16 +39,11 @@ function CardCourse({ item_course, type, index, history }) {
         <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
             <Paper className={`${classes.paper} card-curso`} onClick={ () => courseClick(item_course) }>
                 <img src={item_course.img_link} className={classes.img_course} alt={item_course.title} />
-                <div className="info_course_ctnr">
-                    <Link 
-                        to={{
-                            pathname: `/${item_course.hash}`,
-                            state: { hashCourse: item_course.hash, nameCourse: item_course.title }
-                        }}
-                    >
+                <div className="info_course_ctnr" onClick={ () => courseClick(item_course) }>
+                    <div>
                         <div className="name_course">{item_course.title}</div>
                         <div className="name_producer">{item_course.producer.name}</div>
-                    </Link>
+                    </div>
                     {
                         type === 'offer' ? null : <Info className="info" />
                     }

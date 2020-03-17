@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 function ContainerCourseUnits({ title, current_course_units }) {
     const classes = useStyles();
+
     if(current_course_units.aulas !== undefined){
         return (
             <div className={classes.root}>
@@ -36,7 +37,12 @@ function ContainerCourseUnits({ title, current_course_units }) {
                     </Grid>
                     <Grid item xs={12} sm={10} md={8} lg={6}>
                         <Paper className={classes.paper}>
-                            <PanelClass aulas={current_course_units.aulas} nameCourse={title} finished={current_course_units.finished} />
+                            <PanelClass 
+                                aulas={current_course_units.aulas} 
+                                nameCourse={title} 
+                                finished={current_course_units.finished} 
+                                slug_course={current_course_units.slugCourse}
+                            />
                         </Paper>
                     </Grid>
                     <Grid item xs={1} sm={1} md={2} lg={3}>

@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap');
+
+.check {
+    width: 270px;
+    max-width: 100%;
+    height: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1.3px solid #FFF;
+    color: #DDD;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Poppins';
+    font-weight: 300;
+    font-size: 16px;
+    transition: box-shadow .2s ease-in-out;
+}
+
+.nocheck {
+    width: 270px;
+    max-width: 100%;
+    height: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1.3px solid #FFF3;
+    color: #DDD3;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Poppins';
+    font-weight: 300;
+    font-size: 16px;
+    transition: box-shadow .2s ease-in-out;
+}
+
+.nocheck:hover {
+    box-shadow: 0px 0px 20px #FCB41A44;
+    border-radius: 7px;
+    border: 2px solid #FFF6;
+    color: #DDD;
+}
+
+.titleVideo {
+    font-family: 'Poppins';
+    font-weight: 300;
+    font-size: 23px;
+    color: #DDD
+}
+
+.btnNavigation {
+    height: 70px;
+    background-color: #131414;
+    margin-top: 45px !important;
+    margin-bottom: 10px !important;
+    border: 1px solid rgb(90, 96, 100);
+}
+
+.boxComment {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.boxReplies {
+    display: flex;
+    flex-direction: row;
+}
+
+.boxComment .author {
+    font-family: 'Roboto', sans-serif;
+
+    font-size: 14px;
+    color: #000;
+}
+
+.detetime {
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    color: #131313AA;
+}
+
+.message {
+    margin-top: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #333333;
+}
+
+.containerComments{
+    border-bottom: 1px solid rgba(159, 167, 172, 0.253);
+    padding-bottom: 10px;
+}

@@ -2,7 +2,9 @@ import * as types from "../../constants/courses";
 
 import {
 	getUserCoursesData,
-	getUserCourseUnitsData
+	getUserCourseUnitsData,
+	getUnitData,
+	setFinishedUnitData
 } from "../../../lib/services/courseService";
 
 
@@ -22,6 +24,26 @@ export const getUserCourseUnits = (hash) => {
 		dispatch({
 			type: types.GET_USER_COURSE_UNIT,
 			data: resp
+		});
+	}
+};
+
+export const getUnit = (hash_course, hash_unit) => {
+	return async dispatch => {
+		const resp = await getUnitData(hash_course, hash_unit);
+		dispatch({
+			type: types.GET_CURRENT_UNIT,
+			data: resp
+		});
+	}
+};
+
+export const setFinishedUnit = (hash_course, hash_unit) => {
+	return async dispatch => {
+		const resp = await setFinishedUnitData(hash_course, hash_unit);
+		dispatch({
+			type: types.SET_FINISHED_UNIT,
+			data: { hash_course: hash_course, hash_unit: hash_unit }
 		});
 	}
 };
