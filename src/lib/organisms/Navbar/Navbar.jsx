@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
+import { logout } from '../../services/auth';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -82,17 +85,24 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function Navbar({ openMenu, nameCourse }) {
-
+function Navbar({ openMenu, nameCourse, perfil, history }) {
+    console.log(perfil)
     
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-    const [siglaUsuario] = useState('AU');
+    const [siglaUsuario, setSiglaUsuario] = useState('AU');
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    useEffect(() => {
+        if(perfil.name){
+            const iniciais = perfil.name.match(/\b\w/g) || [];
+            setSiglaUsuario(((iniciais.shift() || '') + (iniciais.pop() || '')).toUpperCase());
+        }
+    }, [perfil]);
 
     const handleProfileMenuOpen = event => {
         setAnchorEl(event.currentTarget);
@@ -105,12 +115,16 @@ function Navbar({ openMenu, nameCourse }) {
     const handleMenuClose = async (action) => {
         setAnchorEl(null);
         handleMobileMenuClose();
-
     };
 
     const openCourses = () => {
         window.location.href = "/courses"; 
     }
+
+    const handleLogout = () => {
+		logout();
+		history.go('/login');
+	}
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -125,7 +139,7 @@ function Navbar({ openMenu, nameCourse }) {
         >
             <MenuItem onClick={handleMenuClose}>Conta</MenuItem>
             <MenuItem onClick={openCourses}>Meus cursos</MenuItem>
-            {/* <MenuItem onClick={User.logout}>Sair</MenuItem> */}
+            <MenuItem onClick={handleLogout}>Sair</MenuItem>
         </Menu>
     );
 
@@ -218,8 +232,8 @@ function Navbar({ openMenu, nameCourse }) {
 }
 
 
-// const mapStateToProps = state => ({
-// 	perfil: state.perfilState.perfil,
-// });
+const mapStateToProps = state => ({
+	perfil: state.perfilState.perfil,
+});
 
-export default connect()(Navbar);
+export default connect(mapStateToProps)(withRouter(Navbar));

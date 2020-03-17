@@ -3,18 +3,29 @@ import { withRouter } from "react-router-dom";
 
 import Navbar from "../../organisms/Navbar";
 import ContainerCursos from "../../organisms/ContainerCourses"
-import { isAuthenticated } from "../../services/auth";
 
-function Courses({ history }){
+import { getUser } from "../../../redux/actions/PerfilActions";
+import { getUserCourses } from "../../../redux/actions/CourseActions";
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux';
 
-    // Impede o usuário de voltar a página de Login
-    useEffect(()=>{
-        if(isAuthenticated()) {
-            window.addEventListener("popstate", () => {
-                history.go(1);
-            });
+function Courses({ history, getUser, getUserCourses }){
+
+    useEffect(() =>
+    {
+        async function listcourses() {
+            await getUserCourses();
         }
-    }, [history]);
+        listcourses();
+    }, [ getUserCourses ]);
+
+    useEffect(() =>
+    {
+        async function userData() {
+            await getUser();
+        }
+        userData();
+    }, [ getUser ]);
 
     
 
@@ -27,4 +38,12 @@ function Courses({ history }){
 
 }
 
-export default withRouter(Courses);
+const mapStateToProps = state => ({
+    courses: state.courseState.courses,
+	perfil: state.perfilState.perfil
+});
+
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({ getUserCourses, getUser }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Courses));

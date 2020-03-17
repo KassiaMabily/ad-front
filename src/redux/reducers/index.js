@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 
-// import { AuthReducer } from './AuthReducer';
+import { PerfilReducer } from './PerfilReducer';
 import { CourseReducer } from './CourseReducer'
 
 const reducers = combineReducers({
-	// perfilState: AuthReducer,
+	perfilState: PerfilReducer,
 	courseState: CourseReducer,
 });
 

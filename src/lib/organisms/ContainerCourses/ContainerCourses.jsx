@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import * as courseActions from "../../../redux/actions/CourseActions";
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
 
 import CardCourse from '../../molecules/CardCourse';
 
@@ -31,15 +29,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function ContainerCourses({ courses, getUserCourses, title }) {
-
-    useEffect(() =>
-    {
-        async function listcourses() {
-            await getUserCourses();
-        }
-        listcourses();
-    }, [ getUserCourses ]);
+function ContainerCourses({ courses, title }) {
 
     const classes = useStyles();
     return (
@@ -61,7 +51,4 @@ const mapStateToProps = state => ({
     courses: state.courseState.courses,
 })
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(courseActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContainerCourses);
+export default connect(mapStateToProps)(ContainerCourses);

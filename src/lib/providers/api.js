@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { errorMessage, errorToastr } from '../services/messageService';
+import { logout } from '../services/auth';
 export const TOKEN_KEY = "@adrockets-Token";
 const api = axios.create({
     // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://api.adgrouptraining.com/v0'
@@ -50,6 +51,10 @@ api.interceptors.response.use((response) => {
             errorMessage('', 'Ocorreu um erro inesperado.');
         } else if (error.response.status === 401) {
             errorMessage('', error.response.data.message);
+            if(error.response.data.message === "ERROR: Token do usuario invalido"){
+                logout();
+                window.location.reload();
+            }
         }
     }
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -21,12 +23,19 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function CardCourse({ item_course, type, index }) {
+function CardCourse({ item_course, type, index, history }) {
 
     const classes = useStyles();
+
+    const courseClick = async (value) => {
+
+        history.push(`/${value}`);
+
+    }
+
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
-            <Paper className={`${classes.paper} card-curso`} >
+            <Paper className={`${classes.paper} card-curso`} onClick={ (value) => courseClick(item_course.slug) }>
                 <img src={item_course.img_link} className={classes.img_course} alt={item_course.title} />
                 <div className="info_course_ctnr">
                     <a href={type === 'offer' ? '/checkout/' + item_course.hash : '/course/' + item_course.hash}>
@@ -41,3 +50,5 @@ export default function CardCourse({ item_course, type, index }) {
         </Grid>
     );
 }
+
+export default withRouter(CardCourse);

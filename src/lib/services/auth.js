@@ -12,7 +12,7 @@ export const login = async (user, password) => {
 
     localStorage.setItem(TOKEN_KEY, token);
 
-    return data.data.user;
+    return token;
 };
 
 export const logout = () => {
