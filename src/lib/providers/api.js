@@ -3,7 +3,7 @@ import { errorMessage, errorToastr } from '../services/messageService';
 import { logout } from '../services/auth';
 export const TOKEN_KEY = "@adrockets-Token";
 const api = axios.create({
-    // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://api.adgrouptraining.com/v0'
+    // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/v0' : 'https://api.adgrouptraining.com/v0'
     baseURL: 'https://api.adgrouptraining.com/v0'
 });
 

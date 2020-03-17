@@ -5,7 +5,7 @@ import { isAuthenticated } from "../services/auth";
 
 import Login from "../pages/Login";
 import Courses from "../pages/Courses";
-
+import CourseUnits from "../pages/CourseUnits";
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -27,8 +27,9 @@ function App() {
 	return (
 		<BrowserRouter >
 			<Switch>
-				<PrivateRoute exact path="/" component={Courses} />
 				<Route path="/login" component={Login} />
+				<PrivateRoute exact path="/" component={Courses} />
+				<PrivateRoute exact path="/:slug_course" component={CourseUnits} />
 			</Switch>
 		</BrowserRouter>
 	);

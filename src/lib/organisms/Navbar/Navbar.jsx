@@ -86,7 +86,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Navbar({ openMenu, nameCourse, perfil, history }) {
-    console.log(perfil)
     
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);

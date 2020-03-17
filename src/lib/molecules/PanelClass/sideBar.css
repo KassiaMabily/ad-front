@@ -1,0 +1,52 @@
+.header-side {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #FCB41A;
+}
+
+.header-side h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #FFF;
+}
+
+.header-side h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: #888;
+    margin-right: 10px;
+}
+
+.progress {
+    width: 50px;
+    margin-left: 10px;
+    
+}
+
+.module-title {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+    stroke: #28A745 !important;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease 0s;
+}
+
+.CircularProgressbar .CircularProgressbar-trail {
+    stroke: #DDD !important;
+    stroke-linecap: round;
+}
+
+.CircularProgressbar .CircularProgressbar-text {
+    fill: #28A745 !important;
+    font-size: 20px;
+    dominant-baseline: middle;
+    text-anchor: middle;
+}
+
