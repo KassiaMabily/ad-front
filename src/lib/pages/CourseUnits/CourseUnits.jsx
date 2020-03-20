@@ -12,7 +12,7 @@ import { COURSE_KEY, getKey } from '../../services/auth';
 function CourseUnits({ current_course_units, getUserCourseUnits }){
 
     console.log(current_course_units);
-
+    
     useEffect(() =>
     {
         async function listcourseunits() {

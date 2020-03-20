@@ -50,7 +50,23 @@ export const getUnitData = async (hash_course, hash_unit) => {
 
 export const setFinishedUnitData = async (hash_course, hash_unit) => {
 
-    // const { data } = await api.put(`/user/progress/course/${hash_course}/unit/${hash_unit}/`, {});
+    const { data } = await api.put(`/user/progress/course/${hash_course}/unit/${hash_unit}/`, {});
 
     return true;
+}
+
+export const postCommentData = async (hash_course, hash_unit, data_comment) => {
+
+    const { data } = await api.post(`/user/comment/course/${hash_course}/unit/${hash_unit}/`, data_comment);
+
+    // return data.data;
+
+    return data.data;
+}
+
+export const postReplyData = async (hash_comment, data_comment) => {
+
+    const { data } = await api.post(`/user/comment/${hash_comment}/reply/`, data_comment);
+
+    return data.data;
 }

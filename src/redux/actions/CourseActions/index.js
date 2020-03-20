@@ -4,7 +4,9 @@ import {
 	getUserCoursesData,
 	getUserCourseUnitsData,
 	getUnitData,
-	setFinishedUnitData
+	setFinishedUnitData,
+	postCommentData,
+	postReplyData
 } from "../../../lib/services/courseService";
 
 
@@ -44,6 +46,26 @@ export const setFinishedUnit = (hash_course, hash_unit) => {
 		dispatch({
 			type: types.SET_FINISHED_UNIT,
 			data: { hash_course: hash_course, hash_unit: hash_unit }
+		});
+	}
+};
+
+export const postComment = (hash_course, hash_unit, data) => {
+	return async dispatch => {
+		const resp = await postCommentData(hash_course, hash_unit, data);
+		dispatch({
+			type: types.POST_COMMMENT_COURSE,
+			data: { hash_course: hash_course, hash_unit: hash_unit, body: resp }
+		});
+	}
+};
+
+export const postReply = (hash_comment, data) => {
+	return async dispatch => {
+		const resp = await postReplyData(hash_comment, data);
+		dispatch({
+			type: types.POST_REPLY_COMMENT,
+			data: { hash_comment: hash_comment, body: resp }
 		});
 	}
 };

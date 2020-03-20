@@ -12,8 +12,6 @@ import { COURSE_KEY, UNIT_KEY, getKey } from '../../services/auth';
 
 function CourseUnitClass({ current_unit, getUnit, getUserCourseUnits }){
 
-    console.log(current_unit);
-
     useEffect(() =>
     {
         async function get_unit() {
