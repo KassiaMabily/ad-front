@@ -25,6 +25,8 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         display: 'block',
+        height: 70,
+        cursor: 'pointer'
     },
     search: {
         position: 'relative',
@@ -189,8 +191,8 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
                             </IconButton>
                             : null
                         }
-                        <Typography className={classes.title} variant="h6" noWrap>
-                            {nameCourse}
+                        <Typography onClick={() => history.go('/') } className={classes.title} variant="h6" noWrap>
+                            <img src="https://api.adgrouptraining.com/v0/static/img/logos/logo-new.png" style={{ height: 50, marginTop: 10 }} alt="ADGroup Training"/>
                         </Typography>
                     </div>
                     <div className={classes.grow} />

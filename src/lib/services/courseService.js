@@ -29,7 +29,7 @@ export const getUserCourseUnitsData = async (hash) => {
         }
         
     }
-
+    
     return {
         aulas: aulas,
         nameCourse: data.data.title,
@@ -38,7 +38,9 @@ export const getUserCourseUnitsData = async (hash) => {
         currentUnit: data.data.current.unit,
         finished: data.data.finished,
         modulo: data.data.current.module_id,
-        nextUnit: data.data.currentNext
+        nextUnit: data.data.currentNext,
+        producer: data.data.producer.name,
+        img_link: data.data.img_link
     };
 };
 

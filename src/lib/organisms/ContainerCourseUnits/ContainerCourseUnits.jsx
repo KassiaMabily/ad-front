@@ -15,6 +15,11 @@ const useStyles = makeStyles(theme => ({
     paper: {
         textAlign: 'center',
     },
+    paper_card: {
+        height: 290,
+        width: '100%',
+        boxShadow: 'none',
+    },
     img_course: {
         width: '100%',
         height: '70%',
@@ -30,12 +35,21 @@ function ContainerCourseUnits({ title, current_course_units }) {
     if(current_course_units.aulas !== undefined){
         return (
             <div className={classes.root}>
-                <h1>{title}</h1>
-                <Grid container spacing={3} >
-                    <Grid item xs={1} sm={1} md={2} lg={3}>
-                        <Paper className={classes.paper}></Paper>
+                
+                <Grid container spacing={6} >
+                    <Grid item md={1} lg={1} />
+                    <Grid item xs={12} sm={12} md={4} lg={4}>
+                        <h2>{title}</h2>
+                        <Paper className={`${classes.paper_card} card-curso`} >
+                            <img src={current_course_units.img_link} className={classes.img_course} alt={current_course_units.nameCourse} />
+                            <div className="info_course_ctnr">
+                                <div>
+                                    <div className="name_producer"><strong>Produtor:</strong> {current_course_units.producer}</div>
+                                </div>
+                            </div>
+                        </Paper>
                     </Grid>
-                    <Grid item xs={12} sm={10} md={8} lg={6}>
+                    <Grid item xs={12} sm={12} md={6} lg={6}>
                         <Paper className={classes.paper}>
                             <PanelClass 
                                 aulas={current_course_units.aulas} 
@@ -45,9 +59,7 @@ function ContainerCourseUnits({ title, current_course_units }) {
                             />
                         </Paper>
                     </Grid>
-                    <Grid item xs={1} sm={1} md={2} lg={3}>
-                        <Paper className={classes.paper}></Paper>
-                    </Grid>
+                    <Grid item md={1} lg={1} />
                 </Grid>
             </div>
         );
