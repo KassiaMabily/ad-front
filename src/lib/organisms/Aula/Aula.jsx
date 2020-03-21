@@ -148,23 +148,22 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
         let url_help = `https://api.whatsapp.com/send?phone=5527999299076&text=Olá me chamo ${perfil.name} e estou com uma dúvida na aula de ${current_unit.current.unit.title}` 
         return (
             <Grid container spacing={0} justify="center" alignItems="center">
-                <Grid item lg={1} md={1} />
-                <Grid item lg={5} md={5} xs={6} className="gridNavigation" style={{ textAlign: 'left', cursor: has_prev ? 'pointer' : 'not-allowed' }} onClick={goPrevious}>
+                <Grid item lg={6} md={6} xs={6} className="gridNavigation" style={{ textAlign: 'left', cursor: has_prev ? 'pointer' : 'not-allowed' }} onClick={goPrevious}>
                     <IconButton aria-label="delete" className={classes.margin} disabled={!has_prev} >
                         <ArrowBackIosIcon fontSize="large" style={{ color: 'white' }} />
                         <Typography style={{ color: 'white' }} >Anterior</Typography>
                     </IconButton>
                 </Grid>
-                <Grid item lg={5} md={5} xs={6} className="gridNavigation" style={{ textAlign: 'right', cursor: has_next ? 'pointer' : 'not-allowed' }} onClick={goNext}>
+                <Grid item lg={6} md={6} xs={6} className="gridNavigation" style={{ textAlign: 'right', cursor: has_next ? 'pointer' : 'not-allowed' }} onClick={goNext}>
                     <IconButton aria-label="delete" className={classes.margin}  disabled={!has_prev} >
                         <Typography style={{ color: 'white' }} >Próximo</Typography>
                         <ArrowForwardIosIcon fontSize="large" style={{ color: 'white' }}/>  
                     </IconButton>
                 </Grid>
-                <Grid item lg={1} md={1} />
 
-                <Grid item lg={1} md={1} />
-                <Grid item lg={10} md={10} xs={12} className="gridVideo" >
+
+
+                <Grid item lg={12} md={12} xs={12} className="gridVideo" >
                     {
                         typeof current_unit.current.unit.video !== 'undefined' ?
                             <video
@@ -178,10 +177,10 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
                             null
                     }
                 </Grid>
-                <Grid item lg={1} md={1} />
+
 
                 <Grid item lg={1} xs={1}/>
-                <Grid item lg={10} xs={10} className={'gridClassTitle'} >
+                <Grid item lg={10}  md={12} sm={12} xs={10} className={'gridClassTitle'} >
                     <h3 className="titleVideo">Aula de {current_unit.current.unit.title}</h3>
                 </Grid>
                 <Grid item lg={1} xs={1}/>

@@ -39,7 +39,7 @@ function ContainerCourseUnits({ title, current_course_units }) {
                 <Grid container spacing={6} >
                     <Grid item md={1} lg={1} />
                     <Grid item xs={12} sm={12} md={4} lg={4}>
-                        <h2>{title}</h2>
+                        <h2 style={{ margin: 0}} >{title}</h2>
                         <Paper className={`${classes.paper_card} card-curso`} >
                             <img src={current_course_units.img_link} className={classes.img_course} alt={current_course_units.nameCourse} />
                             <div className="info_course_ctnr">
