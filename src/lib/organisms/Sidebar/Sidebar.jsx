@@ -16,6 +16,7 @@ function DrawerComponent({ left, current_course_units, setShowMenu }) {
             nameCourse={"ADGROUP"} 
             finished={current_course_units.finished} 
             slug_course={current_course_units.slugCourse}
+            type={"sidebar"}
           />
         </Drawer>
       </div>

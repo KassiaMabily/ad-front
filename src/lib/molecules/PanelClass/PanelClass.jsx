@@ -41,13 +41,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function PanelClass({ history, aulas, nameCourse, finished, slug_course }) {
+function PanelClass({ history, aulas, nameCourse, finished, slug_course, type }) {
     const classes = useStyles();
 
     const unitClick = async (modulo, unit) => {
         if(!unit.is_lock){
             localStorage.setItem(UNIT_KEY, unit.hash);
-            history.push({ pathname: `${slug_course}/${modulo.slug}/${unit.slug}` })
+            console.log(slug_course)
+            console.log(modulo)
+            console.log(unit)
+            console.log(unit)
+            if(type === "sidebar"){
+                window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +unit.slug;
+            }else{
+                history.push({ pathname: `${slug_course}/${modulo.slug}/${unit.slug}` })
+            }
+            
         }
     }
 
