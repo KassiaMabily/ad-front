@@ -7,6 +7,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import PanelClass from './../../molecules/PanelClass';
 
 function DrawerComponent({ left, current_course_units, setShowMenu }) {
+  console.log(current_course_units)
   if(current_course_units.aulas !== undefined){
     return (
       <div >

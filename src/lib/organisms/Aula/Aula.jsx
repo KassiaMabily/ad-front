@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useEffect } from 'react'
 
 import { COURSE_KEY, UNIT_KEY, getKey, NEXT_UNIT_KEY } from '../../services/auth';
-import { setFinishedUnit, postComment, postReply, getUnit } from "../../../redux/actions/CourseActions";
+import { setFinishedUnit, postComment, postReply, getUnit, getUserCourseUnits } from "../../../redux/actions/CourseActions";
 import { setLoading } from "../../../redux/actions/AuxActions";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function useHookWithRefCallback(getUnit, setFinishedUnit, setLoading) {
+function useHookWithRefCallback(getUnit, setFinishedUnit, setLoading, getUserCourseUnits) {
     const ref = useRef(null);
 
     const setRef = useCallback(node => {
@@ -52,7 +52,7 @@ function useHookWithRefCallback(getUnit, setFinishedUnit, setLoading) {
             const next_unit = JSON.parse(getKey(NEXT_UNIT_KEY));
     
             setFinishedUnit(hash_course, hash_unit, 'video')
-    
+            getUserCourseUnits(hash_course)
             if(Object.keys(next_unit).length !== 0){
                 getUnit(hash_course, next_unit.hash);
     
@@ -72,15 +72,15 @@ function useHookWithRefCallback(getUnit, setFinishedUnit, setLoading) {
             node.addEventListener("ended", setViweded);
         }
         ref.current = node
-    }, [setFinishedUnit, getUnit, setLoading])
+    }, [setFinishedUnit, getUnit, setLoading, getUserCourseUnits])
     
     return [setRef]
 }
 
-function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, postReply, perfil, getUser, setLoading }) {
+function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, postReply, perfil, getUser, setLoading, getUserCourseUnits}) {
     const classes = useStyles();
 
-    const [ ref ] = useHookWithRefCallback( getUnit, setFinishedUnit, setLoading );
+    const [ ref ] = useHookWithRefCallback( getUnit, setFinishedUnit, setLoading, getUserCourseUnits );
 
     useEffect(() =>
     {
@@ -101,10 +101,12 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
         if( Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false){
             localStorage.setItem(UNIT_KEY, current_unit.currentNext.unit.hash);
             getUnit(hash_course, current_unit.currentNext.unit.hash);
+            getUserCourseUnits(hash_course);
             setLoading(false);
             let slug = string_to_slug(current_unit.currentNext.unit.title)
             window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +slug;
         }else{
+            getUserCourseUnits(hash_course);
             setLoading(false);
         }
         
@@ -240,6 +242,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ setFinishedUnit, postComment, postReply, getUnit, getUser, setLoading }, dispatch);
+	bindActionCreators({ setFinishedUnit, postComment, postReply, getUnit, getUser, setLoading, getUserCourseUnits }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Aula));

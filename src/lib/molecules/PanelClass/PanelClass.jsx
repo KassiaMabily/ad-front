@@ -47,10 +47,6 @@ function PanelClass({ history, aulas, nameCourse, finished, slug_course, type })
     const unitClick = async (modulo, unit) => {
         if(!unit.is_lock){
             localStorage.setItem(UNIT_KEY, unit.hash);
-            console.log(slug_course)
-            console.log(modulo)
-            console.log(unit)
-            console.log(unit)
             if(type === "sidebar"){
                 window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +unit.slug;
             }else{
@@ -59,6 +55,8 @@ function PanelClass({ history, aulas, nameCourse, finished, slug_course, type })
             
         }
     }
+
+    console.log(finished)
 
     const sideList = (aulas) => (
         <div>
