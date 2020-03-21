@@ -22,7 +22,8 @@
 
 .name_producer {
     font-weight: 200;
-    font-size: 14px
+    font-size: 14px;
+    padding-top: 10px;
 }
 
 .card-curso:hover {

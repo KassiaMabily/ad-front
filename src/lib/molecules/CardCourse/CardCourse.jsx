@@ -12,7 +12,7 @@ import Info from '@material-ui/icons/Info';
 
 const useStyles = makeStyles(theme => ({
     paper: {
-        height: 270,
+        height: 350,
         width: '100%',
         boxShadow: 'none',
     },
