@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import './style.css';
 import { login } from "../../../services/auth"; 
 
@@ -29,7 +29,7 @@ function LoginForm({ history }) {
     return (
         <div className="LoginContainer">
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <img src={'https://www.adgrouptraining.com/templates/logoTopo.png'} alt="Logo" className="logoLogin" />
+                <img src={require('./../../../assets/images/logo.png')} alt="Logo" className="logoLogin" />
             </div>
 
             <div>
@@ -57,9 +57,9 @@ function LoginForm({ history }) {
 
                     {/* </input> */}
                 </form>
-                <Link className='btnLoginGoogle' to="/signup">
+                {/* <Link className='btnLoginGoogle' to="/signup">
                     Criar minha conta
-                </Link>
+                </Link> */}
             </div>
 
             { error && <p className='aviso_erro'>{error}</p>}

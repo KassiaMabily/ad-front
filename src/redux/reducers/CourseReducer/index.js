@@ -22,27 +22,10 @@ export const CourseReducer = (state = initialState, action) => {
 		case GET_CURRENT_UNIT:
 			return { ...state, current_unit: action.data };
 		case SET_FINISHED_UNIT:
-			const hash_unit = action.data.hash_unit;
-
 			let finished = state.current_unit.current.unit.finished ? false : true;
 
 			return {
 				...state,
-				current_course_units: {
-					...state.current_course_units,
-					aulas: [
-						state.current_course_units.aulas.map(aula => {
-							aula.units.map(unit => {
-								if(unit.hash === hash_unit){
-									let new_unit = unit
-									new_unit.finished =true
-									return { ...new_unit }
-								}
-								return unit;
-							})
-						})
-					]
-				},
 				current_unit: { 
 					...state.current_unit, 
 					current: { 

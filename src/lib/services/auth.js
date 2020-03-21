@@ -5,6 +5,7 @@ export const TOKEN_KEY = "@adrockets-Token";
 export const COURSE_KEY = "@adrockets-Course";
 export const MODULO_KEY = "@adrockets-Modulo";
 export const UNIT_KEY = "@adrockets-Unit";
+export const NEXT_UNIT_KEY = "@adrockets-NextUnit";
 
 export const login = async (user, password) => {
     api.defaults.headers.common['Authorization'] = 'Basic ' + encode(user + ':' + password);

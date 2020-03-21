@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from "react-router-dom";
 import Navbar from "../../organisms/Navbar";
 
@@ -7,10 +7,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 
 import Aula from "../../organisms/Aula";
+import Sidebar from '../../organisms/Sidebar';
 
 import { COURSE_KEY, UNIT_KEY, getKey } from '../../services/auth';
 
 function CourseUnitClass({ current_unit, getUnit, getUserCourseUnits }){
+
+    const [ showMenu, setShowMenu ] = useState(false);
 
     useEffect(() =>
     {
@@ -21,13 +24,16 @@ function CourseUnitClass({ current_unit, getUnit, getUserCourseUnits }){
             await getUnit(hash_course, hash_unit);
         }
         get_unit();
-    }, [ getUnit ]);
+    }, [ getUnit, getUserCourseUnits ]);
     
 
     return (
         <div className="bgContainerHome" style={{ backgroundColor: '#F8F8FD' }}>
-            <Navbar openMenu={false} nameCourse={"ADGROUP"} />
-
+            <Navbar showMenu={showMenu} openMenu={setShowMenu} nameCourse={"ADGROUP"} />
+            <Sidebar 
+                left={showMenu}
+                setShowMenu={setShowMenu}
+            />
             <Aula />
             
         </div >

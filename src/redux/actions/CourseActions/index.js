@@ -40,9 +40,9 @@ export const getUnit = (hash_course, hash_unit) => {
 	}
 };
 
-export const setFinishedUnit = (hash_course, hash_unit) => {
+export const setFinishedUnit = (hash_course, hash_unit, type) => {
 	return async dispatch => {
-		const resp = await setFinishedUnitData(hash_course, hash_unit);
+		await setFinishedUnitData(hash_course, hash_unit, type);
 		dispatch({
 			type: types.SET_FINISHED_UNIT,
 			data: { hash_course: hash_course, hash_unit: hash_unit }

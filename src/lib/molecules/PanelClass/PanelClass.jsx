@@ -2,11 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 
-import { getUnit } from "../../../redux/actions/CourseActions";
-import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
-
-import { COURSE_KEY, UNIT_KEY, getKey } from '../../services/auth';
+import { UNIT_KEY } from '../../services/auth';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -51,7 +47,6 @@ function PanelClass({ history, aulas, nameCourse, finished, slug_course }) {
     const unitClick = async (modulo, unit) => {
         if(!unit.is_lock){
             localStorage.setItem(UNIT_KEY, unit.hash);
-            const hash = getKey(COURSE_KEY);
             history.push({ pathname: `${slug_course}/${modulo.slug}/${unit.slug}` })
         }
     }

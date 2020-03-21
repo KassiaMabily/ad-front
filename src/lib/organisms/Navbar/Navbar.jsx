@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function Navbar({ openMenu, nameCourse, perfil, history }) {
+function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
     
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -183,7 +183,7 @@ function Navbar({ openMenu, nameCourse, perfil, history }) {
                                 className={classes.menuButton}
                                 color="inherit"
                                 aria-label="open drawer"
-                                onClick={openMenu}
+                                onClick={() => { showMenu ? openMenu(false) : openMenu(true) }}
                             >
                                 <MenuIcon />
                             </IconButton>
