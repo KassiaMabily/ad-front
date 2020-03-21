@@ -3,22 +3,24 @@ import { withRouter } from "react-router-dom";
 import Navbar from "../../organisms/Navbar";
 
 import { getUserCourseUnits } from "../../../redux/actions/CourseActions";
+import { setLoading } from "../../../redux/actions/AuxActions";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 
 import ContainerCourseUnits from '../../organisms/ContainerCourseUnits';
 import { COURSE_KEY, getKey } from '../../services/auth';
 
-function CourseUnits({ current_course_units, getUserCourseUnits }){
-    
-    useEffect(() =>
-    {
-        async function listcourseunits() {
+function CourseUnits({ current_course_units, getUserCourseUnits, setLoading }){
+
+    useEffect(() => {
+        async function fetchUrl() {
+            setLoading(true);
             const hash = getKey(COURSE_KEY);
             await getUserCourseUnits(hash);
+            setLoading(false);
         }
-        listcourseunits();
-    }, [ getUserCourseUnits ]);
+        fetchUrl();
+    }, [setLoading, getUserCourseUnits]);
     
 
     return (
@@ -32,9 +34,10 @@ function CourseUnits({ current_course_units, getUserCourseUnits }){
 
 const mapStateToProps = state => ({
     current_course_units: state.courseState.current_course_units,
+    is_loading: state.loadingState.is_loading,
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ getUserCourseUnits }, dispatch);
+	bindActionCreators({ getUserCourseUnits, setLoading }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CourseUnits));

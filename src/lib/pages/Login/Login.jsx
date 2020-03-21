@@ -2,6 +2,7 @@ import React from "react";
 import LoginForm from '../../molecules/Forms/LoginForm';
 
 function Login() {
+    
 	return (
 		<div className="bgContainerLogin">
             <div className="LoginContainerBack" />

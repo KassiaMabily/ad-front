@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+
+import { setLoading } from "../../../../redux/actions/AuxActions";
+import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+
 import './style.css';
 import { login } from "../../../services/auth"; 
 
-function LoginForm({ history }) {
+function LoginForm({ history, setLoading }) {
 
     const [ user, setUser ] = useState('');
     const [ password, setPassword] = useState('');
@@ -12,13 +17,17 @@ function LoginForm({ history }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        setLoading(true);
         if (!user || !password) {
+            setLoading(false);
             setError("Preencha todos os campos para continuar!");
         } else {
             try {
                 await login(user, password);
+                setLoading(false);
                 history.replace('/');
             } catch (err) {
+                setLoading(false);
                 console.log(err)
                 setError("Houve um problema com o login, verifique suas credenciais.");
             }
@@ -74,5 +83,11 @@ function LoginForm({ history }) {
     );
 }
 
+const mapStateToProps = state => ({
+    is_loading: state.loadingState.is_loading,
+});
 
-export default withRouter(LoginForm);
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({ setLoading }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginForm));

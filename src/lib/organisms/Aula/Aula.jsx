@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useEffect } from 'react'
 
 import { COURSE_KEY, UNIT_KEY, getKey, NEXT_UNIT_KEY } from '../../services/auth';
 import { setFinishedUnit, postComment, postReply, getUnit } from "../../../redux/actions/CourseActions";
+import { setLoading } from "../../../redux/actions/AuxActions";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -40,13 +41,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function useHookWithRefCallback(getUnit, setFinishedUnit) {
+function useHookWithRefCallback(getUnit, setFinishedUnit, setLoading) {
     const ref = useRef(null);
-
-    
 
     const setRef = useCallback(node => {
         const setViweded = async () => {
+            setLoading(true);
             const hash_course = getKey(COURSE_KEY);
             const hash_unit = getKey(UNIT_KEY);
             const next_unit = JSON.parse(getKey(NEXT_UNIT_KEY));
@@ -59,9 +59,9 @@ function useHookWithRefCallback(getUnit, setFinishedUnit) {
                 localStorage.setItem(UNIT_KEY, next_unit.hash);
     
                 window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +next_unit.slug;
-    
+                setLoading(false);
             }
-            
+            setLoading(false);
         }
 
         if (ref.current) {
@@ -72,36 +72,40 @@ function useHookWithRefCallback(getUnit, setFinishedUnit) {
             node.addEventListener("ended", setViweded);
         }
         ref.current = node
-    }, [setFinishedUnit, getUnit])
+    }, [setFinishedUnit, getUnit, setLoading])
     
     return [setRef]
 }
 
-function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, postReply, perfil, getUser }) {
+function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, postReply, perfil, getUser, setLoading }) {
     const classes = useStyles();
 
-    const [ ref ] = useHookWithRefCallback( getUnit, setFinishedUnit );
+    const [ ref ] = useHookWithRefCallback( getUnit, setFinishedUnit, setLoading );
 
     useEffect(() =>
     {
         async function userData() {
+            setLoading(true)
             await getUser();
+            setLoading(false);
         }
         userData();
-    }, [ getUser ]);
+    }, [ setLoading, getUser ]);
     
     const setViweded = async () => {
+        setLoading(true);
         const hash_course = getKey(COURSE_KEY);
         const hash_unit = getKey(UNIT_KEY);
         setFinishedUnit(hash_course, hash_unit, 'button')
         
-        
         if( Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false){
             localStorage.setItem(UNIT_KEY, current_unit.currentNext.unit.hash);
             getUnit(hash_course, current_unit.currentNext.unit.hash);
-
+            setLoading(false);
             let slug = string_to_slug(current_unit.currentNext.unit.title)
             window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +slug;
+        }else{
+            setLoading(false);
         }
         
     }
@@ -110,6 +114,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
         const hash_course = getKey(COURSE_KEY);
         if( Object.keys(current_unit.currentPrevious).length !== 0 && current_unit.currentPrevious.unit.is_lock === false){
             localStorage.setItem(UNIT_KEY, current_unit.currentPrevious.unit.hash);
+            
             getUnit(hash_course, current_unit.currentPrevious.unit.hash);
 
             let slug = string_to_slug(current_unit.currentPrevious.unit.title)
@@ -225,6 +230,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
             
         );
     }
+    
     return null;
 }
 
@@ -235,6 +241,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ setFinishedUnit, postComment, postReply, getUnit, getUser }, dispatch);
+	bindActionCreators({ setFinishedUnit, postComment, postReply, getUnit, getUser, setLoading }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Aula));
