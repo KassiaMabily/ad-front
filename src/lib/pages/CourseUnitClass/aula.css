@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap');
 
 .titleVideo {
-    font-family: 'Poppins';
+    font-family: 'Roboto', 'Montserrat';
     font-weight: 300;
     font-size: 23px;
     color: #DDD
@@ -26,21 +26,21 @@
 }
 
 .boxComment .author {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Montserrat';
 
     font-size: 14px;
     color: #000;
 }
 
 .detetime {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Montserrat';
     font-size: 30px;
     color: #131313AA;
 }
 
 .message {
     margin-top: 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Montserrat';
     font-size: 16px;
     color: #333333;
 }

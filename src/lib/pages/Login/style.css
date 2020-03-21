@@ -81,7 +81,7 @@
 }
 
 .slogan {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: 100;
     font-size: 28px;
@@ -90,7 +90,7 @@
 }
 
 .slogan2 {
-    font-family: Montserrat;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
@@ -100,7 +100,7 @@
 }
 
 .slogan_footer {
-    font-family: Montserrat;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
@@ -111,7 +111,7 @@
 }
 
 .aviso {
-    font-family: Montserrat;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: 300;
     font-size: 12px;
@@ -122,7 +122,7 @@
 }
 
 .aviso_erro {
-    font-family: Montserrat;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: bold;
     font-size: 10px;
@@ -133,7 +133,7 @@
 }
 
 .senhaPerdida {
-    font-family: Montserrat;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
@@ -163,7 +163,7 @@
     margin-top: 10px;
     padding-left: 10px;
     color: rgba(120, 90, 152, 0.9);
-    font-family: Montserrat;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: 300;
     font-size: 16px;
@@ -176,7 +176,7 @@
     border: 1px solid #FCB41A;
     box-sizing: border-box;
     border-radius: 2px;
-    font-family: Montserrat;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -197,7 +197,7 @@
     border: none;
     /* box-sizing: border-box; */
     border-radius: 2px;
-    font-family: Montserrat;
+    font-family: 'Roboto', 'Montserrat';
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
