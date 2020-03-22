@@ -113,6 +113,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
             }
             
         }else{
+            getUserCourseUnits(hash_course);
             setLoading(false);
         }
         

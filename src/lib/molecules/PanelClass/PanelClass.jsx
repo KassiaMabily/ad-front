@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { UNIT_KEY } from '../../services/auth';
+import { UNIT_KEY, COURSE_KEY, getKey } from '../../services/auth';
+import { bindActionCreators } from 'redux';
+
+import { getUserCourseUnits } from "../../../redux/actions/CourseActions";
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -41,8 +44,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function PanelClass({ history, slug_course, type, current_course_units }) {
+function PanelClass({ history, type, current_course_units, getUserCourseUnits }) {
     const classes = useStyles();
+
+    console.log(current_course_units)
+
+    useEffect(() => {
+        async function fetchUrl() {
+            const hash = getKey(COURSE_KEY);
+            await getUserCourseUnits(hash);
+        }
+        fetchUrl();
+    }, [ getUserCourseUnits]);
 
     const unitClick = async (modulo, unit) => {
         if(!unit.is_lock){
@@ -55,8 +68,6 @@ function PanelClass({ history, slug_course, type, current_course_units }) {
             
         }
     }
-
-    
 
     const sideList = (aulas, finished_aux) => (
         <div>
@@ -126,6 +137,9 @@ function PanelClass({ history, slug_course, type, current_course_units }) {
 
 const mapStateToProps = state => ({
     current_course_units: state.courseState.current_course_units,
-})
-  
-export default connect(mapStateToProps)(withRouter(PanelClass));
+});
+
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({ getUserCourseUnits }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PanelClass));
