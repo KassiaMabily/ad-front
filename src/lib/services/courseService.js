@@ -53,12 +53,10 @@ export const getUnitData = async (hash_course, hash_unit) => {
 
 export const setFinishedUnitData = async (hash_course, hash_unit, type) => {
     if(type === "button"){
-        const {data} = await api.put(`/user/progress/course/${hash_course}/unit/${hash_unit}/`, {});
-        console.log(data);
+        await api.put(`/user/progress/course/${hash_course}/unit/${hash_unit}/`, {});
 
     }else{
         await api.put(`/user/progress/conclusion/course/${hash_course}/unit/${hash_unit}/`, {});
-
     }
     return true;
 }

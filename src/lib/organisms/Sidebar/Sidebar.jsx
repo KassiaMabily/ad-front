@@ -6,12 +6,13 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import PanelClass from './../../molecules/PanelClass';
 
+import "./index.css";
+
 function DrawerComponent({ left, current_course_units, setShowMenu }) {
-  console.log(current_course_units)
   if(current_course_units.aulas !== undefined){
     return (
       <div >
-        <Drawer open={left} onClose={() => setShowMenu(false)}>
+        <Drawer open={left} onClose={() => setShowMenu(false)} className="drawerComponent">
           <PanelClass 
             aulas={current_course_units.aulas} 
             nameCourse={"ADGROUP"} 

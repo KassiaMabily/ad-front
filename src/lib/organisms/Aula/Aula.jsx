@@ -98,15 +98,21 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
         const hash_unit = getKey(UNIT_KEY);
         setFinishedUnit(hash_course, hash_unit, 'button')
         
-        if( Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false){
-            localStorage.setItem(UNIT_KEY, current_unit.currentNext.unit.hash);
-            getUnit(hash_course, current_unit.currentNext.unit.hash);
-            getUserCourseUnits(hash_course);
-            setLoading(false);
-            let slug = string_to_slug(current_unit.currentNext.unit.title)
-            window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +slug;
+        if (current_unit.current.unit.finished === false){
+
+            if( Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false){
+                localStorage.setItem(UNIT_KEY, current_unit.currentNext.unit.hash);
+                getUnit(hash_course, current_unit.currentNext.unit.hash);
+                getUserCourseUnits(hash_course);
+                setLoading(false);
+                let slug = string_to_slug(current_unit.currentNext.unit.title)
+                window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +slug;
+            }else{
+                getUserCourseUnits(hash_course);
+                setLoading(false);
+            }
+            
         }else{
-            getUserCourseUnits(hash_course);
             setLoading(false);
         }
         

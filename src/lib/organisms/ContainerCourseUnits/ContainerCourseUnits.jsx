@@ -51,12 +51,7 @@ function ContainerCourseUnits({ title, current_course_units }) {
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6}>
                         <Paper className={classes.paper}>
-                            <PanelClass 
-                                aulas={current_course_units.aulas} 
-                                nameCourse={title} 
-                                finished={current_course_units.finished} 
-                                slug_course={current_course_units.slugCourse}
-                            />
+                            <PanelClass />
                         </Paper>
                     </Grid>
                     <Grid item md={1} lg={1} />

@@ -23,7 +23,6 @@ export const getUserCourses = () => {
 export const getUserCourseUnits = (hash) => {
 	return async dispatch => {
 		const resp = await getUserCourseUnitsData(hash);
-		console.log(resp)
 		dispatch({
 			type: types.GET_USER_COURSE_UNIT,
 			data: resp

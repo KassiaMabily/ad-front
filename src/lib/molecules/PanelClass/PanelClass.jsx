@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
-
+import { connect } from "react-redux";
 import { UNIT_KEY } from '../../services/auth';
 
 import List from '@material-ui/core/List';
@@ -41,8 +41,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function PanelClass({ history, aulas, nameCourse, finished, slug_course, type }) {
+function PanelClass({ history, slug_course, type, current_course_units }) {
     const classes = useStyles();
+
+
+    console.log("PanelClass")
+    console.log(current_course_units)
 
     const unitClick = async (modulo, unit) => {
         if(!unit.is_lock){
@@ -50,22 +54,22 @@ function PanelClass({ history, aulas, nameCourse, finished, slug_course, type })
             if(type === "sidebar"){
                 window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +unit.slug;
             }else{
-                history.push({ pathname: `${slug_course}/${modulo.slug}/${unit.slug}` })
+                history.push({ pathname: `${current_course_units.slugCourse}/${modulo.slug}/${unit.slug}` })
             }
             
         }
     }
 
-    console.log(finished)
+    
 
-    const sideList = (aulas) => (
+    const sideList = (aulas, finished_aux) => (
         <div>
             {
                 aulas.length ? 
                 <div className="header-side">
-                    <CircularProgressbar color=" #28A745" className="progress" value={(parseFloat(finished.split('/')[0]) / parseFloat(finished.split('/')[1])) * 100} text={`${parseInt((finished.split('/')[0] / finished.split('/')[1]) * 100)}%`} />
-                    <h3>{nameCourse}</h3>
-                    <h6>{finished}</h6>
+                    <CircularProgressbar color=" #28A745" className="progress" value={(parseFloat(finished_aux.split('/')[0]) / parseFloat(finished_aux.split('/')[1])) * 100} text={`${parseInt((finished_aux.split('/')[0] / finished_aux.split('/')[1]) * 100)}%`} />
+                    <h3>{current_course_units.nameCourse}</h3>
+                    <h6>{finished_aux}</h6>
                 </div> 
                 : null
             }
@@ -113,12 +117,19 @@ function PanelClass({ history, aulas, nameCourse, finished, slug_course, type })
     );
 
 
-
-    return (
-        <div >
-            {sideList(aulas)}
-        </div>
-    );
+    if(current_course_units.aulas !== undefined){
+        return (
+            <div >
+                {sideList(current_course_units.aulas, current_course_units.finished)}
+            </div>
+        );
+    }
+    
+    return null;
 }
 
-export default withRouter(PanelClass);
+const mapStateToProps = state => ({
+    current_course_units: state.courseState.current_course_units,
+})
+  
+export default connect(mapStateToProps)(withRouter(PanelClass));
