@@ -44,10 +44,6 @@ const useStyles = makeStyles(theme => ({
 function PanelClass({ history, slug_course, type, current_course_units }) {
     const classes = useStyles();
 
-
-    console.log("PanelClass")
-    console.log(current_course_units)
-
     const unitClick = async (modulo, unit) => {
         if(!unit.is_lock){
             localStorage.setItem(UNIT_KEY, unit.hash);
