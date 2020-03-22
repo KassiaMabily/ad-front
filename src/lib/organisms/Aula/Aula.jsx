@@ -170,7 +170,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
                 </Grid>
 
 
-
+            
                 <Grid item lg={12} md={12} xs={12} className="gridVideo" >
                     {
                         typeof current_unit.current.unit.video !== 'undefined' ?
