@@ -20,6 +20,7 @@ export const getUserCourseUnitsData = async (hash) => {
 
     var aulas = [];
     
+    console.log(data.data);
     
     for(var i = 0; i < data.data.modules.length; i++){
         aulas.push(data.data.modules[i]);
@@ -34,7 +35,7 @@ export const getUserCourseUnitsData = async (hash) => {
         aulas: aulas,
         nameCourse: data.data.title,
         slugCourse: string_to_slug(data.data.title),
-        hashCourse: data.data.hash,
+        hashCourse: hash,
         currentUnit: data.data.current.unit,
         finished: data.data.finished,
         modulo: data.data.current.module_id,

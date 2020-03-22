@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useEffect } from 'react'
 
-import { COURSE_KEY, UNIT_KEY, getKey, NEXT_UNIT_KEY } from '../../services/auth';
+import { COURSE_KEY, MODULO_KEY, UNIT_KEY, getKey, NEXT_UNIT_KEY } from '../../services/auth';
 import { setFinishedUnit, postComment, postReply, getUnit, getUserCourseUnits } from "../../../redux/actions/CourseActions";
 import { setLoading } from "../../../redux/actions/AuxActions";
 import { bindActionCreators } from 'redux';
@@ -95,12 +95,14 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
     const setViweded = async () => {
         setLoading(true);
         const hash_course = getKey(COURSE_KEY);
+        const hash_modulo = getKey(MODULO_KEY);
         const hash_unit = getKey(UNIT_KEY);
-        setFinishedUnit(hash_course, hash_unit, 'button')
+        setFinishedUnit(hash_course, hash_modulo, hash_unit, 'button')
         
         if (current_unit.current.unit.finished === false){
 
             if( Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false){
+                localStorage.setItem(MODULO_KEY, current_unit.currentNext.hash_module);
                 localStorage.setItem(UNIT_KEY, current_unit.currentNext.unit.hash);
                 getUnit(hash_course, current_unit.currentNext.unit.hash);
                 getUserCourseUnits(hash_course);
@@ -122,6 +124,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
     const goPrevious = async () => {
         const hash_course = getKey(COURSE_KEY);
         if( Object.keys(current_unit.currentPrevious).length !== 0 && current_unit.currentPrevious.unit.is_lock === false){
+            localStorage.setItem(MODULO_KEY, current_unit.currentPrevious.hash_module);
             localStorage.setItem(UNIT_KEY, current_unit.currentPrevious.unit.hash);
             
             getUnit(hash_course, current_unit.currentPrevious.unit.hash);

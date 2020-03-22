@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { UNIT_KEY, COURSE_KEY, getKey } from '../../services/auth';
+import { UNIT_KEY, MODULO_KEY, COURSE_KEY, getKey } from '../../services/auth';
 import { bindActionCreators } from 'redux';
 
 import { getUserCourseUnits } from "../../../redux/actions/CourseActions";
@@ -47,8 +47,6 @@ const useStyles = makeStyles(theme => ({
 function PanelClass({ history, type, current_course_units, getUserCourseUnits }) {
     const classes = useStyles();
 
-    console.log(current_course_units)
-
     useEffect(() => {
         async function fetchUrl() {
             const hash = getKey(COURSE_KEY);
@@ -59,6 +57,7 @@ function PanelClass({ history, type, current_course_units, getUserCourseUnits })
 
     const unitClick = async (modulo, unit) => {
         if(!unit.is_lock){
+            localStorage.setItem(MODULO_KEY, modulo.hash);
             localStorage.setItem(UNIT_KEY, unit.hash);
             if(type === "sidebar"){
                 window.location.pathname = window.location.pathname.split('/').slice(0,-1).join('/') + "/" +unit.slug;
