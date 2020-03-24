@@ -68,6 +68,8 @@ function PanelClass({ history, type, current_course_units, getUserCourseUnits })
         }
     }
 
+    console.log(current_course_units);
+
     const sideList = (aulas, finished_aux) => (
         <div>
             {
@@ -110,7 +112,11 @@ function PanelClass({ history, type, current_course_units, getUserCourseUnits })
                                                         <LockOpenOutlinedIcon />  
                                             }
                                         </ListItemIcon>
-                                        <ListItemText primary={unit.title} />
+                                        <ListItemText 
+                                            primary={unit.title} 
+                                            secondary={unit.day_released !== null ? unit.day_released : null}
+                                        />        
+                                        
                                     </ListItem>
                                 )
                             })}
