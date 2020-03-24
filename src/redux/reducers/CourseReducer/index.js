@@ -22,8 +22,7 @@ export const CourseReducer = (state = initialState, action) => {
 		case GET_CURRENT_UNIT:
 			return { ...state, current_unit: action.data };
 		case SET_FINISHED_UNIT:
-			let finished = state.current_unit.current.unit.finished ? false : true;
-
+			const finished = action.data.finished;
 			return {
 				...state,
 				current_unit: { 

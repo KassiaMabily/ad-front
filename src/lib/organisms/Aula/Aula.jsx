@@ -16,7 +16,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import IconButton from '@material-ui/core/IconButton';
 import { getUser } from "../../../redux/actions/PerfilActions";
-import { CloudDownload, PictureAsPdf } from '@material-ui/icons';
+import { CloudDownload } from '@material-ui/icons';
 import string_to_slug from '../../assets/Functions';
 
 import './aula.css'
@@ -50,18 +50,19 @@ function useHookWithRefCallback(getUnit, setFinishedUnit, setLoading, getUserCou
             const hash_course = getKey(COURSE_KEY);
             const hash_unit = getKey(UNIT_KEY);
             const next_unit = JSON.parse(getKey(NEXT_UNIT_KEY));
-
-            setFinishedUnit(hash_course, hash_unit, 'video')
-            getUserCourseUnits(hash_course)
-            if (Object.keys(next_unit).length !== 0) {
-                getUnit(hash_course, next_unit.hash);
-
-                localStorage.setItem(UNIT_KEY, next_unit.hash);
-
-                window.location.pathname = window.location.pathname.split('/').slice(0, -1).join('/') + "/" + next_unit.slug;
+            const hash_modulo = getKey(MODULO_KEY);
+            setFinishedUnit(hash_course, hash_modulo, hash_unit, 'video').then( _ => {
+                getUserCourseUnits(hash_course);
                 setLoading(false);
-            }
-            setLoading(false);
+                if (Object.keys(next_unit).length !== 0) {
+                    getUnit(hash_course, next_unit.hash);
+                    localStorage.setItem(UNIT_KEY, next_unit.hash);
+                    window.location.pathname = window.location.pathname.split('/').slice(0, -1).join('/') + "/" + next_unit.slug;
+                }
+            }).catch((error) => { 
+                setLoading(false); 
+                // console.log('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);  
+            });
         }
 
         if (ref.current) {
@@ -96,28 +97,11 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
         const hash_course = getKey(COURSE_KEY);
         const hash_modulo = getKey(MODULO_KEY);
         const hash_unit = getKey(UNIT_KEY);
-        setFinishedUnit(hash_course, hash_modulo, hash_unit, 'button')
-
-        if (current_unit.current.unit.finished === false) {
-
-            if (Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false) {
-                localStorage.setItem(MODULO_KEY, current_unit.currentNext.hash_module);
-                localStorage.setItem(UNIT_KEY, current_unit.currentNext.unit.hash);
-                getUnit(hash_course, current_unit.currentNext.unit.hash);
-                getUserCourseUnits(hash_course);
-                setLoading(false);
-                let slug = string_to_slug(current_unit.currentNext.unit.title)
-                window.location.pathname = window.location.pathname.split('/').slice(0, -1).join('/') + "/" + slug;
-            } else {
-                getUserCourseUnits(hash_course);
-                setLoading(false);
-            }
-
-        } else {
+        setFinishedUnit(hash_course, hash_modulo, hash_unit, 'button').then( _ => {
             getUserCourseUnits(hash_course);
             setLoading(false);
-        }
-
+            goNext();
+        })
     }
 
     const goPrevious = async () => {
@@ -137,6 +121,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
     const goNext = async () => {
         const hash_course = getKey(COURSE_KEY);
         if (Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false) {
+            localStorage.setItem(MODULO_KEY, current_unit.currentNext.hash_module);
             localStorage.setItem(UNIT_KEY, current_unit.currentNext.unit.hash);
             getUnit(hash_course, current_unit.currentNext.unit.hash);
 
@@ -175,7 +160,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
 
 
 
-                    <Grid container xs={12} style={{ backgroundColor: "#111" }} >
+                    <Grid container style={{ backgroundColor: "#111" }} >
                         {
                             typeof current_unit.current.unit.video !== 'undefined' ?
                                 <Grid item xs={12} md={8} lg={7} className="gridVideo" >
@@ -204,7 +189,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid spacing={0} justify="center" alignItems="center">
+                <Grid >
 
                     {/* <Grid item lg={1} xs={1}/> */}
                     <Grid item lg={10} md={12} sm={12} xs={12} className={'gridClassTitle'} >
@@ -225,11 +210,11 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
                     }
 
                     {/* // {current_unit.current.unit.files.length > 0 ? <Typography>Leitura complementar</Typography> : null} */}
-                    <Grid container xs={12} >
+                    <Grid container >
 
                         {current_unit.current.unit.files.length > 0 ? current_unit.current.unit.files
                             .map((file, index) =>
-                                <Grid item xs={12} md={2} l={4} >
+                                <Grid item xs={12} md={2} l={4} key={`file_${index}`}>
                                     <a href={file.url} target="_blank" rel="noopener noreferrer" key={`file_${index}`} style={{ textDecoration: 'none', color: '#DDD2' }}>
                                         <button className={'bntLinkFiles'}>
 

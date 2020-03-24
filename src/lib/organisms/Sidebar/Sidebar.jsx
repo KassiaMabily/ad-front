@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import { connect } from "react-redux";
 import 'react-circular-progressbar/dist/styles.css';
-import { UNIT_KEY, MODULO_KEY, COURSE_KEY, getKey } from '../../services/auth';
+import { COURSE_KEY, getKey } from '../../services/auth';
 import { bindActionCreators } from 'redux';
 import { getUserCourseUnits } from "../../../redux/actions/CourseActions";
 import { withRouter } from "react-router-dom";

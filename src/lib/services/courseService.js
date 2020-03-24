@@ -20,8 +20,6 @@ export const getUserCourseUnitsData = async (hash) => {
 
     var aulas = [];
     
-    console.log(data.data);
-    
     for(var i = 0; i < data.data.modules.length; i++){
         aulas.push(data.data.modules[i]);
         aulas[i]['slug'] = string_to_slug(data.data.modules[i].title);
@@ -54,12 +52,12 @@ export const getUnitData = async (hash_course, hash_unit) => {
 
 export const setFinishedUnitData = async (hash_course, hash_unit, type) => {
     if(type === "button"){
-        await api.put(`/user/progress/course/${hash_course}/unit/${hash_unit}/`, {});
-
+        const { data } = await api.put(`/user/progress/course/${hash_course}/unit/${hash_unit}/`, {});
+        return data.data;
     }else{
-        await api.put(`/user/progress/conclusion/course/${hash_course}/unit/${hash_unit}/`, {});
+        const { data } = await api.put(`/user/progress/conclusion/course/${hash_course}/unit/${hash_unit}/`, {});
+        return data.data;
     }
-    return true;
 }
 
 export const postCommentData = async (hash_course, hash_unit, data_comment) => {
