@@ -42,10 +42,10 @@ export const getUnit = (hash_course, hash_unit) => {
 
 export const setFinishedUnit = (hash_course, hash_modulo, hash_unit, type) => {
 	return async dispatch => {
-		await setFinishedUnitData(hash_course, hash_unit, type);
+		const resp = await setFinishedUnitData(hash_course, hash_unit, type);
 		dispatch({
 			type: types.SET_FINISHED_UNIT,
-			data: { hash_modulo: hash_modulo, hash_unit: hash_unit }
+			data: { hash_modulo: hash_modulo, hash_unit: hash_unit, finished: resp.finished }
 		});
 	}
 };
