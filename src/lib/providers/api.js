@@ -4,7 +4,7 @@ import { logout } from '../services/auth';
 export const TOKEN_KEY = "@adrockets-Token";
 const api = axios.create({
     // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/v0' : 'https://api.adgrouptraining.com/v0'
-    baseURL: 'http://13.59.13.188:5000/v0'
+    baseURL: 'https://api.adgrouptraining.com/v0'
 });
 
 api.interceptors.request.use((config) => {
