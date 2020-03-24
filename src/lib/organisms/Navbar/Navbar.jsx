@@ -139,7 +139,7 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Conta</MenuItem>
-            <MenuItem onClick={openCourses}>Meus cursos</MenuItem>
+            <MenuItem onClick={() => history.push('/') }>Meus cursos</MenuItem>
             <MenuItem onClick={handleLogout}>Sair</MenuItem>
         </Menu>
     );
@@ -191,7 +191,7 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
                             </IconButton>
                             : null
                         }
-                        <Typography onClick={() => history.go('/') } className={classes.title} variant="h6" noWrap>
+                        <Typography onClick={() => history.push('/') } className={classes.title} variant="h6" noWrap>
                             <img src="https://api.adgrouptraining.com/v0/static/img/logos/logo-new.png" style={{ height: 50, marginTop: 10 }} alt="ADGroup Training"/>
                         </Typography>
                     </div>
