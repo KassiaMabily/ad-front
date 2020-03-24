@@ -118,10 +118,6 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
         handleMobileMenuClose();
     };
 
-    const openCourses = () => {
-        window.location.href = "/courses"; 
-    }
-
     const handleLogout = () => {
 		logout();
 		history.go('/login');
