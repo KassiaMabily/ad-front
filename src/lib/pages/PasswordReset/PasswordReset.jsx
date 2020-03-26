@@ -24,7 +24,17 @@ function PasswordReset() {
 	return (
 		<div className="bgContainerLogin">
             <div className="LoginContainerBack" />
-			<PasswordResetForm />
+            <div className="LoginContainer">
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <img src={require('./../../assets/images/logo.png')} alt="Logo" className="logoLogin" />
+                </div>
+                <div>
+                    <PasswordResetForm />
+                </div>
+                <div className='senhaPerdida'>
+                    Já tem conta? Clique <a href='/'>aqui</a>
+                </div>
+            </div>
             <div className='slogan_footer'>
                 2020 © powered by 4Rockets
             </div>

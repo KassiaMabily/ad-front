@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 
-import { setLoading } from "../../../../redux/actions/AuxActions";
+import { setLoading, setOpenPassword } from "../../../../redux/actions/AuxActions";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import './style.css';
 import { resetpassword, logout } from "../../../services/auth";
-import { sucessMessage } from "../../../services/messageService";
 
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
 
-function PasswordForgotForm({ history, setLoading }) {
+function PasswordResetForm({ history, setLoading, setOpenPassword }) {
 
     const [ password, setPassword ] = useState('');
     const [ error, setError] = useState('');
@@ -31,6 +30,7 @@ function PasswordForgotForm({ history, setLoading }) {
             try {
                 await resetpassword(password);
                 setLoading(false);
+                setOpenPassword(false);
                 MySwal.fire({
                     title: "Sucesso",
                     text: "Sua senha foi alterada, favor logar novamente",
@@ -55,42 +55,30 @@ function PasswordForgotForm({ history, setLoading }) {
     }
 
     return (
-        <div className="LoginContainer">
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <img src={require('./../../../assets/images/logo.png')} alt="Logo" className="logoLogin" />
+
+        <form onSubmit={(e) => handleSubmit(e) }>
+            <div className='inputs'>
+                <input 
+                    className='input' 
+                    type="password" 
+                    placeholder='Digite sua nova senha' 
+                    name="password" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value) } 
+                />
             </div>
-
-            <div>
-                <form onSubmit={(e) => handleSubmit(e) }>
-                    <div className='inputs'>
-                        <input 
-                            className='input' 
-                            type="password" 
-                            placeholder='Digite sua nova senha' 
-                            name="password" 
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value) } 
-                        />
-                    </div>
-                    <input type="submit" className='btnLogin' value='Enviar' />
-
-                </form>
-            </div>
-
-            { error && <p className='aviso_erro'>{error}</p>}
-
-            <div className='senhaPerdida'>
-                Já tem conta? Clique <a href='/'>aqui</a>
-            </div>
-        </div>
+            <input type="submit" className='btnLogin' value='Alterar' />
+        </form>
+            
     );
 }
 
 const mapStateToProps = state => ({
     is_loading: state.loadingState.is_loading,
+    is_open: state.loadingState.is_open,
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ setLoading }, dispatch);
+	bindActionCreators({ setLoading, setOpenPassword }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PasswordForgotForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PasswordResetForm));

@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { setOpenPassword } from "./../../../redux/actions/AuxActions";
+import { bindActionCreators } from 'redux';
 
 import { logout } from '../../services/auth';
+import ModalPasswordReset from '../ModalPasswordReset';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -87,7 +90,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
+function Navbar({ showMenu, openMenu, nameCourse, perfil, history, setOpenPassword }) {
     
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -135,6 +138,7 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Conta</MenuItem>
+            <MenuItem onClick={()=>setOpenPassword(true)}>Alterar senha</MenuItem>
             <MenuItem onClick={() => history.push('/') }>Meus cursos</MenuItem>
             <MenuItem onClick={handleLogout}>Sair</MenuItem>
         </Menu>
@@ -170,7 +174,7 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
     return (
         
         <div className={classes.grow}>
-
+            <ModalPasswordReset />
             <AppBar position="fixed" className={classes.background}>
                 {/* <ThemeProvider theme={theme}> */}
                 <Toolbar style={{ justifyContent: 'space-between' }}>
@@ -228,9 +232,12 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history }) {
     );
 }
 
-
 const mapStateToProps = state => ({
-	perfil: state.perfilState.perfil,
+    openPassword: state.loadingState.openPassword,
+    perfil: state.perfilState.perfil,
 });
 
-export default connect(mapStateToProps)(withRouter(Navbar));
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({ setOpenPassword }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

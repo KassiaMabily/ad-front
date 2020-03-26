@@ -8,3 +8,12 @@ export const setLoading = (is_loading) => {
 		});
 	}
 };
+
+export const setOpenPassword = (is_open) => {
+	return async dispatch => {
+		dispatch({
+			type: types.SET_OPEN_PASSWORD,
+			data: is_open
+		});
+	}
+};
