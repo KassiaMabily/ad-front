@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 
 import './style.css';
 import { resetpassword, logout } from "../../../services/auth";
+import { errorMessage } from "../../../services/messageService";
 
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -16,7 +17,6 @@ const MySwal = withReactContent(Swal);
 function PasswordResetForm({ history, setLoading, setOpenPassword }) {
 
     const [ password, setPassword ] = useState('');
-    const [ error, setError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,7 +25,7 @@ function PasswordResetForm({ history, setLoading, setOpenPassword }) {
 
         if (!password) {
             setLoading(false);
-            setError("Preencha todos os campos para continuar!");
+            errorMessage("","Preencha todos os campos para continuar!");
         } else {
             try {
                 await resetpassword(password);
@@ -48,7 +48,7 @@ function PasswordResetForm({ history, setLoading, setOpenPassword }) {
             } catch (err) {
                 setLoading(false);
                 console.log(err)
-                setError("Houve um problema com o login, verifique suas credenciais.");
+                errorMessage("","Houve um problema com o login, verifique suas credenciais.");
             }
         }
 

@@ -19,7 +19,7 @@ function PasswordReset() {
         }else{
             errorMessage("Erro", "Token inválido")
         }
-    }, []);
+    }, [query]);
     
 	return (
 		<div className="bgContainerLogin">
