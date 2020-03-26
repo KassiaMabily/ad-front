@@ -7,6 +7,8 @@ import Login from "../pages/Login";
 import Courses from "../pages/Courses";
 import CourseUnits from "../pages/CourseUnits";
 import CourseUnitClass from "../pages/CourseUnitClass";
+import PasswordForgot from "../pages/ForgotPassword";
+import PasswordReset from "../pages/PasswordReset"
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -43,7 +45,9 @@ function App({ is_loading }) {
                 <CircularProgress color="inherit" />
             </Backdrop> 
 			<Switch>
-				<Route path="/login" component={Login} />
+				<Route exact path="/login" component={Login} />
+				<Route exact path="/esqueci-senha" component={PasswordForgot} />
+				<Route exact path="/user/password" component={PasswordReset} />
 				<PrivateRoute exact path="/" component={Courses} />
 				<PrivateRoute exact path="/:slug_course" component={CourseUnits} />
 				<PrivateRoute exact path="/:slug_course/:slug_modulo/:slug_class" component={CourseUnitClass} />

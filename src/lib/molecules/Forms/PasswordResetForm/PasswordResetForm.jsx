@@ -3,29 +3,48 @@ import React, { useState } from 'react';
 import { setLoading } from "../../../../redux/actions/AuxActions";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import './style.css';
-import { login } from "../../../services/auth"; 
+import { resetpassword, logout } from "../../../services/auth";
+import { sucessMessage } from "../../../services/messageService";
 
-function LoginForm({ history, setLoading }) {
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
-    const [ user, setUser ] = useState('');
-    const [ password, setPassword] = useState('');
+const MySwal = withReactContent(Swal);
+
+function PasswordForgotForm({ history, setLoading }) {
+
+    const [ password, setPassword ] = useState('');
     const [ error, setError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         setLoading(true);
-        if (!user || !password) {
+
+        if (!password) {
             setLoading(false);
             setError("Preencha todos os campos para continuar!");
         } else {
             try {
-                await login(user, password);
+                await resetpassword(password);
                 setLoading(false);
-                history.replace('/');
+                MySwal.fire({
+                    title: "Sucesso",
+                    text: "Sua senha foi alterada, favor logar novamente",
+                    type: 'success',
+                    allowOutsideClick: false,
+                    showCancelButton: true,
+                }).then(result => {
+                    if (result.value) {
+                        logout();
+                        // history.go('/login');
+
+                        window.location.href = "/login"
+                    }
+                })
             } catch (err) {
                 setLoading(false);
                 console.log(err)
@@ -46,38 +65,22 @@ function LoginForm({ history, setLoading }) {
                     <div className='inputs'>
                         <input 
                             className='input' 
-                            type="text" 
-                            placeholder='user ou email' 
-                            name="user" 
-                            value={user} 
-                            onChange={(e) => setUser(e.target.value) } 
-                        />
-
-                        <input 
-                            className='input' 
                             type="password" 
-                            placeholder='senha' 
+                            placeholder='Digite sua nova senha' 
                             name="password" 
-                            value={ password } 
+                            value={password} 
                             onChange={(e) => setPassword(e.target.value) } 
                         />
                     </div>
-                    <input type="submit" className='btnLogin' value='Entrar' />
+                    <input type="submit" className='btnLogin' value='Enviar' />
 
-                    {/* </input> */}
                 </form>
-                {/* <Link className='btnLoginGoogle' to="/signup">
-                    Criar minha conta
-                </Link> */}
             </div>
 
             { error && <p className='aviso_erro'>{error}</p>}
 
-            <div className='aviso'>
-                Ao se inscrever, você concorda com nossos <a href='https://google.com'>Termos de Serviço</a> e <a href='https://google.com'>Política de Privacidade</a>.
-                </div>
             <div className='senhaPerdida'>
-                <Link to="/esqueci-senha">Esqueci minha senha</Link>
+                Já tem conta? Clique <a href='/'>aqui</a>
             </div>
         </div>
     );
@@ -90,4 +93,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
 	bindActionCreators({ setLoading }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PasswordForgotForm));

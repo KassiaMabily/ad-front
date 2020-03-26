@@ -61,7 +61,6 @@ function useHookWithRefCallback(getUnit, setFinishedUnit, setLoading, getUserCou
                 }
             }).catch((error) => { 
                 setLoading(false); 
-                // console.log('Error from processDataAsycn() with async( When promise gets rejected ): ' + error);  
             });
         }
 

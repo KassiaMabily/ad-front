@@ -3,29 +3,30 @@ import React, { useState } from 'react';
 import { setLoading } from "../../../../redux/actions/AuxActions";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import './style.css';
-import { login } from "../../../services/auth"; 
+import { forgotpassword } from "../../../services/auth";
+import { sucessMessage } from "../../../services/messageService";
 
-function LoginForm({ history, setLoading }) {
+function PasswordForgotForm({ history, setLoading }) {
 
-    const [ user, setUser ] = useState('');
-    const [ password, setPassword] = useState('');
+    const [ email, setEmail ] = useState('');
     const [ error, setError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         setLoading(true);
-        if (!user || !password) {
+
+        if (!email) {
             setLoading(false);
             setError("Preencha todos os campos para continuar!");
         } else {
             try {
-                await login(user, password);
+                await forgotpassword(email);
                 setLoading(false);
-                history.replace('/');
+                sucessMessage("Sucesso", "O link para redefinição da sua senha foi enviado para o seu e-mail")
             } catch (err) {
                 setLoading(false);
                 console.log(err)
@@ -47,37 +48,21 @@ function LoginForm({ history, setLoading }) {
                         <input 
                             className='input' 
                             type="text" 
-                            placeholder='user ou email' 
+                            placeholder='E-mail' 
                             name="user" 
-                            value={user} 
-                            onChange={(e) => setUser(e.target.value) } 
-                        />
-
-                        <input 
-                            className='input' 
-                            type="password" 
-                            placeholder='senha' 
-                            name="password" 
-                            value={ password } 
-                            onChange={(e) => setPassword(e.target.value) } 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value) } 
                         />
                     </div>
-                    <input type="submit" className='btnLogin' value='Entrar' />
+                    <input type="submit" className='btnLogin' value='Enviar' />
 
-                    {/* </input> */}
                 </form>
-                {/* <Link className='btnLoginGoogle' to="/signup">
-                    Criar minha conta
-                </Link> */}
             </div>
 
             { error && <p className='aviso_erro'>{error}</p>}
 
-            <div className='aviso'>
-                Ao se inscrever, você concorda com nossos <a href='https://google.com'>Termos de Serviço</a> e <a href='https://google.com'>Política de Privacidade</a>.
-                </div>
             <div className='senhaPerdida'>
-                <Link to="/esqueci-senha">Esqueci minha senha</Link>
+                Já tem conta? Clique <a href='/'>aqui</a>
             </div>
         </div>
     );
@@ -90,4 +75,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
 	bindActionCreators({ setLoading }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PasswordForgotForm));
