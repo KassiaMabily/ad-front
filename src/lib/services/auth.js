@@ -19,6 +19,13 @@ export const login = async (user, password) => {
     return token;
 };
 
+export const register = async (data_registration) => {
+
+    const { data } = await api.post('/registration/user/', data_registration);
+    console.log(data);
+    return data;
+};
+
 export const forgotpassword = async (email) => {
 
     const { data } = await api.post('/user/password/', {email: email});

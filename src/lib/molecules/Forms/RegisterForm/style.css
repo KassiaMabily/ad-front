@@ -1,0 +1,219 @@
+.LoginContainer {
+    /* position: absolute; */
+    margin: auto;
+    width: 397px;
+    height: 589px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: #FFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    z-index: 12;
+    padding-top: 20px;
+    padding-bottom: 30px; 
+}
+
+.LoginContainerBack {
+    /* position: absolute; */
+    margin: auto;
+    width: 397px;
+
+    height: 589px;
+    padding-top: 20px;
+    padding-bottom: 30px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: #FFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    background: #58585A;
+    transform: rotate(10.49deg);
+    position: absolute;
+    z-index: 10;
+    margin-top: -25px;
+}
+
+.bgContainer {
+    width: 100vw;
+    height: 100vh;
+    background-color: #FFF;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bgContainerLogin {
+    width: 100vw;
+    height: 100vh;
+    background-color: #FFF;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #ee7752, #FDFDFD, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.slogan {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 28px;
+    line-height: 33px;
+    color: #FCB41A;
+}
+
+.slogan2 {
+    font-family: 'Roboto', 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 13px;
+    /* or 93% */
+    color: #58585A;
+}
+
+.slogan_footer {
+    font-family: 'Roboto', 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 13px;
+    /* or 93% */
+    color: #58585A;
+    margin: 20px;
+}
+
+.aviso {
+    font-family: 'Roboto', 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 13px;
+    width: 75%;
+    text-align: center;
+    color: #8E77A5;
+}
+
+.aviso_erro {
+    font-family: 'Roboto', 'Montserrat';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 11px;
+    width: 75%;
+    text-align: center;
+    color: #F00;
+}
+
+.senhaPerdida {
+    font-family: 'Roboto', 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 13px;
+    width: 75%;
+    text-align: center;
+    color: #8E77A5;
+}
+
+.logoLogin {
+    width: auto;
+    height: 100px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    height: 40px;
+    width: 300px;
+    border: 1px solid #FCB41A;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 7px rgba(173, 154, 193, 0.36);
+    border-radius: 2px;
+    margin-top: 10px;
+    padding-left: 10px;
+    color: rgba(120, 90, 152, 0.9);
+    font-family: 'Roboto', 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.btnLoginGoogle {
+    height: 40px;
+    width: 300px;
+    border: 1px solid #FCB41A;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-family: 'Roboto', 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height */
+    text-align: center;
+    color: #FCB41A;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0px 40px 0px 40px;
+    margin-top: 10px;
+}
+
+.btnLogin {
+    height: 40px;
+    width: 300px;
+    border: none;
+    /* box-sizing: border-box; */
+    border-radius: 2px;
+    font-family: 'Roboto', 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    background: #FCB41A;
+    text-align: center;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0px 40px 0px 40px;
+    margin-top: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* .input:hover {
+    box-shadow: 0 0 5px #785A98;
+    border: 1px solid #785A98;
+  } */
