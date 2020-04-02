@@ -22,7 +22,7 @@ export const login = async (user, password) => {
 export const register = async (data_registration) => {
 
     const { data } = await api.post('/registration/user/', data_registration);
-    console.log(data);
+
     return data;
 };
 

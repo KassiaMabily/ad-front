@@ -66,9 +66,9 @@ function LoginForm({ history, setLoading }) {
 
                     {/* </input> */}
                 </form>
-                {/* <Link className='btnLoginGoogle' to="/signup">
+                <Link className='btnLoginGoogle' to="/cadastro">
                     Criar minha conta
-                </Link> */}
+                </Link>
             </div>
 
             { error && <p className='aviso_erro'>{error}</p>}
