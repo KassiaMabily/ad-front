@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { isAuthenticated } from "../services/auth";
 
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 import Courses from "../pages/Courses";
 import CourseUnits from "../pages/CourseUnits";
 import CourseUnitClass from "../pages/CourseUnitClass";
@@ -46,8 +47,9 @@ function App({ is_loading }) {
             </Backdrop> 
 			<Switch>
 				<Route exact path="/login" component={Login} />
+				<Route exact path="/cadastro" component={Register} />
 				<Route exact path="/esqueci-senha" component={PasswordForgot} />
-				<Route exact path="/user/password" component={PasswordReset} />
+				<Route exact path="/alterar-senha" component={PasswordReset} />
 				<PrivateRoute exact path="/" component={Courses} />
 				<PrivateRoute exact path="/:slug_course" component={CourseUnits} />
 				<PrivateRoute exact path="/:slug_course/:slug_modulo/:slug_class" component={CourseUnitClass} />

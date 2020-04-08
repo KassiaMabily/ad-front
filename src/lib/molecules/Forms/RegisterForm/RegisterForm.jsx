@@ -6,24 +6,31 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 import './style.css';
-import { login } from "../../../services/auth"; 
+import { register } from "../../../services/auth"; 
 
-function LoginForm({ history, setLoading }) {
+function RegisterForm({ history, setLoading }) {
 
-    const [ user, setUser ] = useState('');
+    const [ name, setName ] = useState('');
+    const [ email, setEmail ] = useState('');
     const [ password, setPassword] = useState('');
     const [ error, setError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        const payload = {
+            name: name, 
+            email: email, 
+            password: password
+        }
+
         setLoading(true);
-        if (!user || !password) {
+        if (!name || !email || !password) {
             setLoading(false);
             setError("Preencha todos os campos para continuar!");
         } else {
             try {
-                await login(user, password);
+                await register(payload);
                 setLoading(false);
                 history.replace('/');
             } catch (err) {
@@ -47,10 +54,19 @@ function LoginForm({ history, setLoading }) {
                         <input 
                             className='input' 
                             type="text" 
-                            placeholder='user ou email' 
-                            name="user" 
-                            value={user} 
-                            onChange={(e) => setUser(e.target.value) } 
+                            placeholder='Nome completo' 
+                            name="name" 
+                            value={name} 
+                            onChange={(e) => setName(e.target.value) } 
+                        />
+
+                        <input 
+                            className='input' 
+                            type="text" 
+                            placeholder='E-mail' 
+                            name="email" 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value) } 
                         />
 
                         <input 
@@ -63,22 +79,13 @@ function LoginForm({ history, setLoading }) {
                         />
                     </div>
                     <input type="submit" className='btnLogin' value='Entrar' />
-
-                    {/* </input> */}
                 </form>
-                <Link className='btnLoginGoogle' to="/cadastro">
-                    Criar minha conta
+                <Link className='btnLoginGoogle' to="/login">
+                    Já tenho conta
                 </Link>
             </div>
 
             { error && <p className='aviso_erro'>{error}</p>}
-
-            <div className='aviso'>
-                Ao se inscrever, você concorda com nossos <a href='https://google.com'>Termos de Serviço</a> e <a href='https://google.com'>Política de Privacidade</a>.
-                </div>
-            <div className='senhaPerdida'>
-                <Link to="/esqueci-senha">Esqueci minha senha</Link>
-            </div>
         </div>
     );
 }
@@ -90,4 +97,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
 	bindActionCreators({ setLoading }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RegisterForm));
