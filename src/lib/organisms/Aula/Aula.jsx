@@ -6,6 +6,7 @@ import { setLoading } from "../../../redux/actions/AuxActions";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import YouTube from 'react-youtube';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -130,8 +131,10 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
 
     }
 
-    if (current_unit.current !== undefined) {
+    
 
+    if (current_unit.current !== undefined) {
+        console.log(current_unit.current.unit)
         if (Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false) {
             localStorage.setItem(NEXT_UNIT_KEY, JSON.stringify({ hash: current_unit.currentNext.unit.hash, slug: string_to_slug(current_unit.currentNext.unit.title) }));
         } else {
@@ -162,6 +165,16 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
                     <Grid container style={{ backgroundColor: "#111" }} >
                         {
                             typeof current_unit.current.unit.video !== 'undefined' ?
+
+                                current_unit.current.unit.video.type === 'youtube' ? 
+                                <Grid item xs={12} md={8} lg={7} className="gridVideo" >
+                                    <YouTube 
+                                        videoId={current_unit.current.unit.video.url} 
+                                        onEnd={setViweded} 
+                                        style={{ maxWidth: 1080, width: '100%', maxHeight: 720 }} 
+                                    />
+                                </Grid>
+                                : 
                                 <Grid item xs={12} md={8} lg={7} className="gridVideo" >
                                     <video
                                         ref={ref}
@@ -171,8 +184,9 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
                                         src={current_unit.current.unit.video.url}
                                     />
                                 </Grid>
-                                :
-                                null
+
+                            :
+                            null
                         }
                         <Grid item xs={12} md={4} lg={3} >
                             <button onClick={setViweded} className={current_unit.current.unit.finished ? 'buttonClass check' : 'buttonClass nocheck'}>
