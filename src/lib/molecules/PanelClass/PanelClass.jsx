@@ -112,7 +112,7 @@ function PanelClass({ history, type, current_course_units, getUserCourseUnits })
                                         </ListItemIcon>
                                         <ListItemText 
                                             primary={unit.title} 
-                                            secondary={unit.day_released !== null ? unit.day_released : null}
+                                            secondary={unit.day_released !== null ? 'Disponível a partir de '+unit.day_released : null}
                                         />        
                                         
                                     </ListItem>
