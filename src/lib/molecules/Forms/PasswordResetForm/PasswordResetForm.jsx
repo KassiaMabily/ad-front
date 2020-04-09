@@ -36,12 +36,11 @@ function PasswordResetForm({ history, setLoading, setOpenPassword }) {
                     text: "Sua senha foi alterada, favor logar novamente",
                     type: 'success',
                     allowOutsideClick: false,
-                    showCancelButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: 'Fazer login',
                 }).then(result => {
                     if (result.value) {
                         logout();
-                        // history.go('/login');
-
                         window.location.href = "/login"
                     }
                 })
