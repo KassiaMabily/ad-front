@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { errorMessage, errorToastr } from '../services/messageService';
+import { errorMessage } from '../services/messageService';
 import { logout } from '../services/auth';
 export const TOKEN_KEY = "@adrockets-Token";
 const api = axios.create({
     // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/v0' : 'https://api.adgrouptraining.com/v0'
+    // baseURL: 'http://18.219.149.117/v0'
     baseURL: 'https://api.adgrouptraining.com/v0'
 });
 
@@ -23,28 +24,7 @@ api.interceptors.response.use((response) => {
     console.log(error.response)
     if (error.response) {
         if (error.response.status === 400) {
-            const responseData = error.response.data;
-
-            if (typeof(responseData) == 'string') {
-                errorMessage(null, responseData);
-            } else if (typeof(responseData) == 'object') {
-                const handleError = (error, key) => {
-                    if ((!key) || (key === 'non_field_errors'))
-                        errorToastr(`${error}`);
-                    else
-                        errorToastr(`${key}: ${error}`);
-                };
-
-                Object.keys(responseData).forEach(function(key) {
-                if (typeof(responseData[key]) == 'string') {
-                    handleError(responseData[key]);
-                } else {
-                    responseData[key].forEach(s => {
-                    handleError(s, key);
-                    });
-                }
-                });
-            }
+            errorMessage('', error.response.data.message);
         } else if (error.response.status === 404) {
             errorMessage('', 'O recurso não foi encontrado');
         } else if (error.response.status === 500) {
@@ -58,7 +38,7 @@ api.interceptors.response.use((response) => {
         }
     }
 
-  return Promise.reject(error);
+    return Promise.reject(error);
 })
 
 export default api;

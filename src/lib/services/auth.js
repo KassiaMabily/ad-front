@@ -19,6 +19,27 @@ export const login = async (user, password) => {
     return token;
 };
 
+export const register = async (data_registration) => {
+
+    const { data } = await api.post('/registration/user/', data_registration);
+
+    return data;
+};
+
+export const forgotpassword = async (email) => {
+
+    const { data } = await api.post('/user/password/', {email: email});
+
+    return data;
+};
+
+export const resetpassword = async (password) => {
+
+    const { data } = await api.put('/user/password/', { new_password: password });
+
+    return data;
+};
+
 export const logout = () => {
     localStorage.clear();
 }

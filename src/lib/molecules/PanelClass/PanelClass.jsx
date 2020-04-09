@@ -68,8 +68,6 @@ function PanelClass({ history, type, current_course_units, getUserCourseUnits })
         }
     }
 
-    console.log(current_course_units);
-
     const sideList = (aulas, finished_aux) => (
         <div>
             {
