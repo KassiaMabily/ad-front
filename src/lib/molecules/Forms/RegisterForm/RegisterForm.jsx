@@ -36,7 +36,6 @@ function RegisterForm({ history, setLoading }) {
             try {
                 await register(payload);
                 setLoading(false);
-                history.replace('/');
                 MySwal.fire({
                     title: "Sucesso",
                     text: "Cadastro realizado",
