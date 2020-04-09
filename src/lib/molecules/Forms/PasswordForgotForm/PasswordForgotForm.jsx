@@ -26,7 +26,7 @@ function PasswordForgotForm({ history, setLoading }) {
             try {
                 await forgotpassword(email);
                 setLoading(false);
-                sucessMessage("Sucesso", "O link para redefinição da sua senha foi enviado para o seu e-mail")
+                sucessMessage("Sucesso", "Você deve receber um link para redefinição da sua senha no seu e-email nos próximos minutos. Confira sua caixa de spam.")
             } catch (err) {
                 setLoading(false);
                 console.log(err)
