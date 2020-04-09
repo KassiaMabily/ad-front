@@ -6,7 +6,11 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 import './style.css';
-import { register } from "../../../services/auth"; 
+import { register } from "../../../services/auth";
+
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal);
 
 function RegisterForm({ history, setLoading }) {
 
@@ -33,6 +37,18 @@ function RegisterForm({ history, setLoading }) {
                 await register(payload);
                 setLoading(false);
                 history.replace('/');
+                MySwal.fire({
+                    title: "Sucesso",
+                    text: "Cadastro realizado",
+                    type: 'success',
+                    allowOutsideClick: false,
+                    showCancelButton: false,
+                    confirmButtonText: 'Fazer login'
+                }).then(result => {
+                    if (result.value) {
+                        window.location.href = "/"
+                    }
+                })
             } catch (err) {
                 setLoading(false);
                 console.log(err)
