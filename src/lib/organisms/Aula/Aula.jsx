@@ -143,7 +143,7 @@ function Aula({ history, current_unit, setFinishedUnit, getUnit, postComment, po
 
         const has_next = Object.keys(current_unit.currentNext).length !== 0 && current_unit.currentNext.unit.is_lock === false ? true : false;
         const has_prev = Object.keys(current_unit.currentPrevious).length !== 0 && current_unit.currentPrevious.unit.is_lock === false ? true : false;
-        let url_help = `https://api.whatsapp.com/send?phone=5527999299076&text=Olá me chamo ${perfil.name} e estou com uma dúvida na aula de ${current_unit.current.unit.title}`
+        let url_help = `https://api.whatsapp.com/send?phone=+5527988547444&text=Olá me chamo ${perfil.name} e estou com uma dúvida na aula de ${current_unit.current.unit.title}`
         return (
             <div>
                 <Grid container spacing={0} justify="center" alignItems="center">

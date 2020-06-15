@@ -66,15 +66,15 @@ function LoginForm({ history, setLoading }) {
 
                     {/* </input> */}
                 </form>
-                <Link className='btnLoginGoogle' to="/cadastro">
+                {/* <Link className='btnLoginGoogle' to="/cadastro">
                     Criar minha conta
-                </Link>
+                </Link> */}
             </div>
 
             { error && <p className='aviso_erro'>{error}</p>}
 
             <div className='aviso'>
-                Ao se inscrever, você concorda com nossos <a href='https://google.com'>Termos de Serviço</a> e <a href='https://google.com'>Política de Privacidade</a>.
+                Ao se inscrever, você concorda com nossos <a target="_blank" href='https://adgrouptraining.com.br/termos.pdf'>Termos de Serviço</a> e <a target="_blank" href='https://adgrouptraining.com.br/pp.pdf'>Política de Privacidade</a>.
                 </div>
             <div className='senhaPerdida'>
                 <Link to="/esqueci-senha">Esqueci minha senha</Link>

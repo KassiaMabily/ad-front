@@ -137,7 +137,7 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history, setOpenPasswo
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Conta</MenuItem>
+            {/* <MenuItem onClick={handleMenuClose}>Conta</MenuItem>  */}
             <MenuItem onClick={()=>setOpenPassword(true)}>Alterar senha</MenuItem>
             <MenuItem onClick={() => history.push('/') }>Meus cursos</MenuItem>
             <MenuItem onClick={handleLogout}>Sair</MenuItem>
