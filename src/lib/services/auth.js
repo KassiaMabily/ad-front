@@ -14,7 +14,7 @@ export const login = async (user, password) => {
 
     const { token } = data.data;
 
-    localStorage.setItem(TOKEN_KEY, token);
+    await localStorage.setItem(TOKEN_KEY, token);
 
     return token;
 };

@@ -31,11 +31,14 @@ api.interceptors.response.use((response) => {
             errorMessage('', 'Ocorreu um erro inesperado.');
         } else if (error.response.status === 401) {
             errorMessage('', error.response.data.message);
-            if(error.response.data.message === "ERROR: Token do usuario invalido"){
-                logout();
-                window.location.reload();
-            }
+            // if (error.response.data.message === "ERROR: Token do usuario invalido") {
+            //     logout();
+            //     window.location.reload();
+            // }
         }
+        //independente do erro sempre fará o logout (limpar o localStorage)
+        logout();
+        window.location.reload();
     }
 
     return Promise.reject(error);

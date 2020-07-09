@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 import './style.css';
-import { login } from "../../../services/auth"; 
+import { login, logout } from "../../../services/auth"; 
 
 function LoginForm({ history, setLoading }) {
 
@@ -23,6 +23,7 @@ function LoginForm({ history, setLoading }) {
             setError("Preencha todos os campos para continuar!");
         } else {
             try {
+                await logout();
                 await login(user, password);
                 setLoading(false);
                 history.replace('/');
