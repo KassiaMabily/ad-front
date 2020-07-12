@@ -104,7 +104,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #111;
+    background-color: #1F1;
+}
+
+@media only screen and (min-width: 901px) {
+    .gridVideo .video-js{
+        width: 50vw !important;
+        height: 27.5vw !important;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .gridVideo .video-js{
+        width: 100vw !important;
+        height: 56vw !important;
+    }
 }
 
 .boxComment {
