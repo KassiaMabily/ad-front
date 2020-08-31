@@ -16,7 +16,7 @@ export const getUserCoursesData = async () => {
 
 
 export const getUserCourseUnitsData = async (hash) => {
-    const { data } = await api.get(`/user/course/${hash}/`, {});
+    const { data } = await api.get(`/user/course/teste/${hash}/`, {});
 
     var aulas = [];
     

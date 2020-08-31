@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from "react";
+import React, { useCallback, useRef, useEffect, useState } from "react";
 
 import {
   COURSE_KEY,
@@ -30,9 +30,12 @@ import IconButton from "@material-ui/core/IconButton";
 import { getUser } from "../../../redux/actions/PerfilActions";
 import { CloudDownload } from "@material-ui/icons";
 import string_to_slug from "../../assets/Functions";
+import YouTube from "react-youtube";
 
 import "./aula.css";
 import { Typography } from "@material-ui/core";
+
+import Timer from "./Timer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,54 +55,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function useHookWithRefCallback(
-  getUnit,
-  setFinishedUnit,
-  setLoading,
-  getUserCourseUnits
-) {
-  const ref = useRef(null);
+// function useHookWithRefCallback(
+//   getUnit,
+//   setFinishedUnit,
+//   setLoading,
+//   getUserCourseUnits
+// ) {
+//   const ref = useRef(null);
 
-  const setRef = useCallback(
-    (node) => {
-      const setViweded = async () => {
-        setLoading(true);
-        const hash_course = getKey(COURSE_KEY);
-        const hash_unit = getKey(UNIT_KEY);
-        const next_unit = JSON.parse(getKey(NEXT_UNIT_KEY));
-        const hash_modulo = getKey(MODULO_KEY);
-        setFinishedUnit(hash_course, hash_modulo, hash_unit, "video")
-          .then((_) => {
-            getUserCourseUnits(hash_course);
-            setLoading(false);
-            if (Object.keys(next_unit).length !== 0) {
-              getUnit(hash_course, next_unit.hash);
-              localStorage.setItem(UNIT_KEY, next_unit.hash);
-              window.location.pathname =
-                window.location.pathname.split("/").slice(0, -1).join("/") +
-                "/" +
-                next_unit.slug;
-            }
-          })
-          .catch((error) => {
-            setLoading(false);
-          });
-      };
+//   const setRef = useCallback(
+//     (node) => {
+//       const setViweded = async () => {
+//         setLoading(true);
+//         const hash_course = getKey(COURSE_KEY);
+//         const hash_unit = getKey(UNIT_KEY);
+//         const next_unit = JSON.parse(getKey(NEXT_UNIT_KEY));
+//         const hash_modulo = getKey(MODULO_KEY);
+//         setFinishedUnit(hash_course, hash_modulo, hash_unit, "video")
+//           .then((_) => {
+//             getUserCourseUnits(hash_course);
+//             setLoading(false);
+//             if (Object.keys(next_unit).length !== 0) {
+//               getUnit(hash_course, next_unit.hash);
+//               localStorage.setItem(UNIT_KEY, next_unit.hash);
+//               window.location.pathname =
+//                 window.location.pathname.split("/").slice(0, -1).join("/") +
+//                 "/" +
+//                 next_unit.slug;
+//             }
+//           })
+//           .catch((error) => {
+//             setLoading(false);
+//           });
+//       };
 
-      if (ref.current) {
-        ref.current.removeEventListener("ended", setViweded);
-      }
+//       if (ref.current) {
+//         ref.current.removeEventListener("ended", setViweded);
+//       }
 
-      if (node) {
-        node.addEventListener("ended", setViweded);
-      }
-      ref.current = node;
-    },
-    [setFinishedUnit, getUnit, setLoading, getUserCourseUnits]
-  );
+//       if (node) {
+//         node.addEventListener("ended", setViweded);
+//       }
+//       ref.current = node;
+//     },
+//     [setFinishedUnit, getUnit, setLoading, getUserCourseUnits]
+//   );
 
-  return [setRef];
-}
+//   return [setRef];
+// }
 
 function Aula({
   history,
@@ -114,13 +117,18 @@ function Aula({
   getUserCourseUnits,
 }) {
   const classes = useStyles();
-
-  const [ref] = useHookWithRefCallback(
-    getUnit,
-    setFinishedUnit,
-    setLoading,
-    getUserCourseUnits
+  const [timerCurrent, setTimerCurrent] = useState(
+    current_unit.current.unit.video.datetime_release
   );
+  const [timerString, setTimerStrig] = useState("");
+  // const [showTimer, setShowTimer] = useState(false);
+
+  // const [ref] = useHookWithRefCallback(
+  //   getUnit,
+  //   setFinishedUnit,
+  //   setLoading,
+  //   getUserCourseUnits
+  // );
 
   useEffect(() => {
     async function userData() {
@@ -130,6 +138,7 @@ function Aula({
     userData();
   }, [setLoading, getUser]);
 
+  //função para setar a aula como vizualizada
   const setViweded = async () => {
     setLoading(true);
     const hash_course = getKey(COURSE_KEY);
@@ -142,6 +151,7 @@ function Aula({
     });
   };
 
+  //função para ir para a aula anterior
   const goPrevious = async () => {
     const hash_course = getKey(COURSE_KEY);
     if (
@@ -162,6 +172,7 @@ function Aula({
     }
   };
 
+  //função para avançar para a próxima aula
   const goNext = async () => {
     const hash_course = getKey(COURSE_KEY);
     if (
@@ -178,10 +189,38 @@ function Aula({
     }
   };
 
-  if (current_unit.current !== undefined) {
-    console.log(current_unit.current.unit);
-    setLoading(false);
+  const x = setInterval(() => {
+    // console.log(current_unit.current.unit.video.description)
+    // Get today's date and time
+    const now = new Date();
+    const time = new Date(timerCurrent);
 
+    // Find the distance between now and the count down date
+    var distance = time.getTime() - now.getTime();
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="demo"
+    const stringTime =
+      days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+    // this.setState({ timerStrig: stringTime });
+    setTimerStrig(stringTime);
+    // console.log(current_unit.current.unit.video.description)
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      clearInterval(x);
+    }
+  }, 1000);
+
+  if (current_unit.current !== undefined) {
+    setLoading(false);
     if (
       Object.keys(current_unit.currentNext).length !== 0 &&
       current_unit.currentNext.unit.is_lock === false
@@ -208,165 +247,177 @@ function Aula({
         ? true
         : false;
     let url_help = `https://api.whatsapp.com/send?phone=+5527988547444&text=Olá me chamo ${perfil.name} e estou com uma dúvida na aula de ${current_unit.current.unit.title}`;
-    return (
-      <div>
-        <Grid container spacing={0} justify="center" alignItems="center">
-          <Grid
-            item
-            lg={6}
-            md={6}
-            xs={6}
-            className="gridNavigation"
-            style={{
-              textAlign: "left",
-              cursor: has_prev ? "pointer" : "not-allowed",
-            }}
-            onClick={goPrevious}
-          >
-            <IconButton
-              aria-label="delete"
-              className={classes.margin}
-              disabled={!has_prev}
-            >
-              <ArrowBackIosIcon fontSize="large" style={{ color: "white" }} />
-              <Typography style={{ color: "white" }}>Anterior</Typography>
-            </IconButton>
-          </Grid>
-          <Grid
-            item
-            lg={6}
-            md={6}
-            xs={6}
-            className="gridNavigation"
-            style={{
-              textAlign: "right",
-              cursor: has_next ? "pointer" : "not-allowed",
-            }}
-            onClick={goNext}
-          >
-            <IconButton
-              aria-label="delete"
-              className={classes.margin}
-              disabled={!has_prev}
-            >
-              <Typography style={{ color: "white" }}>Próximo</Typography>
-              <ArrowForwardIosIcon
-                fontSize="large"
-                style={{ color: "white" }}
-              />
-            </IconButton>
-          </Grid>
 
-          <Grid container style={{ backgroundColor: "#111" }}>
-            {typeof current_unit.current.unit.video !== "undefined" ? (
-              current_unit.current.unit.video.type ===
-              "application/x-mpegURL" ? (
-                <div className="gridVideo">
-                  <Player
-                    autoplay
-                    controls
-                    sources={[
-                      {
-                        src: current_unit.current.unit.video.url,
-                        type: "application/x-mpegURL",
-                      },
-                    ]}
-                  />
-                </div>
-              ) : (
-                <Grid item xs={12} md={8} lg={7} className="gridVideo">
-                  <video
-                    ref={ref}
-                    controls
-                    controlsList="nodownload"
-                    style={{ maxWidth: 1080, width: "100%", maxHeight: 720 }}
-                    src={current_unit.current.unit.video.url}
-                  />
-                </Grid>
-              )
-            ) : null}
-            <Grid item xs={12} md={4} lg={3}>
-              <button
-                onClick={setViweded}
-                className={
-                  current_unit.current.unit.finished
-                    ? "buttonClass check"
-                    : "buttonClass nocheck"
-                }
+    if (current_unit.current.unit.video.is_timer) {
+      return (
+        <div>
+          asdasdasd
+          <Timer string_timer={timerString} tubnaill={current_unit.current.unit.video.tubnaill} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Grid container spacing={0} justify="center" alignItems="center">
+            <Grid
+              item
+              lg={6}
+              md={6}
+              xs={6}
+              className="gridNavigation"
+              style={{
+                textAlign: "left",
+                cursor: has_prev ? "pointer" : "not-allowed",
+              }}
+              onClick={goPrevious}
+            >
+              <IconButton
+                aria-label="delete"
+                className={classes.margin}
+                disabled={!has_prev}
               >
-                <CheckCircle
-                  style={{
-                    marginRight: 10,
-                    color: current_unit.current.unit.finished
-                      ? "#FDFDFD"
-                      : "#FDFDFD",
-                  }}
+                <ArrowBackIosIcon fontSize="large" style={{ color: "white" }} />
+                <Typography style={{ color: "white" }}>Anterior</Typography>
+              </IconButton>
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              xs={6}
+              className="gridNavigation"
+              style={{
+                textAlign: "right",
+                cursor: has_next ? "pointer" : "not-allowed",
+              }}
+              onClick={goNext}
+            >
+              <IconButton
+                aria-label="delete"
+                className={classes.margin}
+                disabled={!has_prev}
+              >
+                <Typography style={{ color: "white" }}>Próximo</Typography>
+                <ArrowForwardIosIcon
+                  fontSize="large"
+                  style={{ color: "white" }}
                 />
-                {current_unit.current.unit.finished
-                  ? "Marcar como não concluída"
-                  : "Marcar como concluída"}
-              </button>
-              <a
-                href={url_help}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: "none", color: "#DDD2" }}
-              >
-                <button className={"buttonClass"}>
-                  <WhatsAppIcon style={{ marginRight: 10 }} />
-                  Falar com o professor
+              </IconButton>
+            </Grid>
+
+            <Grid container style={{ backgroundColor: "#111" }}>
+              {typeof current_unit.current.unit.video !== "undefined" ? (
+                current_unit.current.unit.video.type ===
+                "application/x-mpegURL" ? (
+                  <div className="gridVideo">
+                    <Player
+                      autoplay
+                      controls
+                      sources={[
+                        {
+                          src: current_unit.current.unit.video.url,
+                          type: "application/x-mpegURL",
+                        },
+                      ]}
+                    />
+                  </div>
+                ) : (
+                  <div className="gridVideo">
+                    <YouTube
+                      videoId={current_unit.current.unit.video.url}
+                      onEnd={setViweded}
+                      style={{ maxWidth: 1080, width: "100%", height: "100%" }}
+                    />
+                  </div>
+                )
+              ) : null}
+
+              {/* <AdPlayer unit_video={current_unit.current.unit.video} /> */}
+
+              <Grid item xs={12} md={4} lg={3}>
+                <button
+                  onClick={setViweded}
+                  className={
+                    current_unit.current.unit.finished
+                      ? "buttonClass check"
+                      : "buttonClass nocheck"
+                  }
+                >
+                  <CheckCircle
+                    style={{
+                      marginRight: 10,
+                      color: current_unit.current.unit.finished
+                        ? "#FDFDFD"
+                        : "#FDFDFD",
+                    }}
+                  />
+                  {current_unit.current.unit.finished
+                    ? "Marcar como não concluída"
+                    : "Marcar como concluída"}
                 </button>
-              </a>
+                <a
+                  href={url_help}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none", color: "#DDD2" }}
+                >
+                  <button className={"buttonClass"}>
+                    <WhatsAppIcon style={{ marginRight: 10 }} />
+                    Falar com o professor
+                  </button>
+                </a>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid>
-          {/* <Grid item lg={1} xs={1}/> */}
-          <Grid
-            item
-            lg={10}
-            md={12}
-            sm={12}
-            xs={12}
-            className={"gridClassTitle"}
-          >
-            <h3 className="titleVideo">{current_unit.current.unit.title}</h3>
-          </Grid>
+          <Grid>
+            {/* <Grid item lg={1} xs={1}/> */}
+            <Grid
+              item
+              lg={10}
+              md={12}
+              sm={12}
+              xs={12}
+              className={"gridClassTitle"}
+            >
+              <h3 className="titleVideo">{current_unit.current.unit.title}</h3>
+            </Grid>
 
-          {current_unit.current.unit.description !== null ? (
-            <div>
-              {/* <Grid item lg={1} xs={1} /> */}
-              <Grid item lg={10} xs={10}>
-                {current_unit.current.unit.description}
-              </Grid>
-              <Grid item lg={1} xs={1} />
-            </div>
-          ) : null}
+            {current_unit.current.unit.description !== null ? (
+              <div>
+                {/* <Grid item lg={1} xs={1} /> */}
+                <Grid item lg={10} xs={10}>
+                  {current_unit.current.unit.description}
+                </Grid>
+                <Grid item lg={1} xs={1} />
+              </div>
+            ) : null}
 
-          {/* // {current_unit.current.unit.files.length > 0 ? <Typography>Leitura complementar</Typography> : null} */}
-          <Grid container>
-            {current_unit.current.unit.files.length > 0
-              ? current_unit.current.unit.files.map((file, index) => (
-                  <Grid item xs={12} md={2} l={4} key={`file_${index}`}>
-                    <a
-                      href={file.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      key={`file_${index}`}
-                      style={{ textDecoration: "none", color: "#DDD2" }}
-                    >
-                      <button className={"bntLinkFiles"}>
-                        <CloudDownload style={{ marginRight: 10 }} />
-                        {file.name}
-                      </button>
-                    </a>
-                  </Grid>
-                ))
-              : null}
+            {/* // {current_unit.current.unit.files.length > 0 ? <Typography>Leitura complementar</Typography> : null} */}
+            <Grid container></Grid>
+            <Grid container>
+              {current_unit.current.unit.files.length > 0
+                ? current_unit.current.unit.files.map((file, index) => (
+                    <Grid item xs={12} md={2} l={4} key={`file_${index}`}>
+                      <a
+                        href={file.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={`file_${index}`}
+                        style={{ textDecoration: "none", color: "#DDD2" }}
+                      >
+                        <button className={"bntLinkFiles"}>
+                          <CloudDownload style={{ marginRight: 10 }} />
+                          {file.name}
+                        </button>
+                      </a>
+                    </Grid>
+                  ))
+                : null}
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    );
+        </div>
+      );
+    }
   }
 
   return null;

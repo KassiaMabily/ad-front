@@ -104,7 +104,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #1F1;
+    /* background-color: #1F1; */
+    min-width: 50%;
 }
 
 @media only screen and (min-width: 901px) {

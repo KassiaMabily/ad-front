@@ -1,6 +1,8 @@
 import api from '../providers/api';
 import { encode } from 'base-64'
 
+import TagManager from "react-gtm-module";
+
 export const TOKEN_KEY = "@adrockets-Token";
 export const COURSE_KEY = "@adrockets-Course";
 export const MODULO_KEY = "@adrockets-Modulo";
@@ -15,6 +17,12 @@ export const login = async (user, password) => {
     const { token } = data.data;
 
     await localStorage.setItem(TOKEN_KEY, token);
+
+    await TagManager.dataLayer({
+        dataLayer: {
+          event: 'login_plataforma',
+        },
+      })
 
     return token;
 };
