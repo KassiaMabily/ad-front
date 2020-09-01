@@ -7,18 +7,20 @@ export const getUserCoursesData = async () => {
 
     var courses = [];
     
-    for(var i = 0; i < data.data.courses.length; i++){
-        courses.push(data.data.courses[i]);
-        courses[i]['slug'] = string_to_slug(data.data.courses[i].title);
+    for(var i = 0; i < data.data.length; i++){
+        courses.push(data.data[i]);
+        courses[i]['slug'] = string_to_slug(data.data[i].title);
     }
     return courses;
 };
 
 
 export const getUserCourseUnitsData = async (hash) => {
-    const { data } = await api.get(`/user/course/teste/${hash}/`, {});
+    const { data } = await api.get(`/user/course/${hash}/`, {});
 
     var aulas = [];
+
+    console.log(data.data.modules)
     
     for(var i = 0; i < data.data.modules.length; i++){
         aulas.push(data.data.modules[i]);
@@ -34,9 +36,9 @@ export const getUserCourseUnitsData = async (hash) => {
         nameCourse: data.data.title,
         slugCourse: string_to_slug(data.data.title),
         hashCourse: hash,
-        currentUnit: data.data.current.unit,
-        finished: data.data.finished,
-        modulo: data.data.current.module_id,
+        currentUnit: data.data.modules[0].units[0],
+        finished: data.data.progress,
+        modulo: data.data.modules[0].hash,
         nextUnit: data.data.currentNext,
         producer: data.data.producer.name,
         img_link: data.data.img_link

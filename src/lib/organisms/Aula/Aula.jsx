@@ -118,8 +118,12 @@ function Aula({
 }) {
   const classes = useStyles();
   const [timerCurrent, setTimerCurrent] = useState(
-    current_unit.current.unit.video.datetime_release
+    current_unit.video.release_datetime
   );
+  // current_unit.current.unit.video.datetime_release
+
+
+
   const [timerString, setTimerStrig] = useState("");
   // const [showTimer, setShowTimer] = useState(false);
 
@@ -141,6 +145,7 @@ function Aula({
   //função para setar a aula como vizualizada
   const setViweded = async () => {
     setLoading(true);
+    
     const hash_course = getKey(COURSE_KEY);
     const hash_modulo = getKey(MODULO_KEY);
     const hash_unit = getKey(UNIT_KEY);
@@ -219,40 +224,39 @@ function Aula({
     }
   }, 1000);
 
-  if (current_unit.current !== undefined) {
+  if (current_unit !== undefined) {
     setLoading(false);
-    if (
-      Object.keys(current_unit.currentNext).length !== 0 &&
-      current_unit.currentNext.unit.is_lock === false
-    ) {
-      localStorage.setItem(
-        NEXT_UNIT_KEY,
-        JSON.stringify({
-          hash: current_unit.currentNext.unit.hash,
-          slug: string_to_slug(current_unit.currentNext.unit.title),
-        })
-      );
-    } else {
-      localStorage.setItem(NEXT_UNIT_KEY, JSON.stringify({}));
-    }
+    // if (
+    //   Object.keys(current_unit.currentNext).length !== 0 &&
+    //   current_unit.currentNext.unit.is_lock === false
+    // ) {
+    //   localStorage.setItem(
+    //     NEXT_UNIT_KEY,
+    //     JSON.stringify({
+    //       hash: current_unit.currentNext.unit.hash,
+    //       slug: string_to_slug(current_unit.currentNext.unit.title),
+    //     })
+    //   );
+    // } else {
+    //   localStorage.setItem(NEXT_UNIT_KEY, JSON.stringify({}));
+    // }
 
-    const has_next =
-      Object.keys(current_unit.currentNext).length !== 0 &&
-      current_unit.currentNext.unit.is_lock === false
-        ? true
-        : false;
-    const has_prev =
-      Object.keys(current_unit.currentPrevious).length !== 0 &&
-      current_unit.currentPrevious.unit.is_lock === false
-        ? true
-        : false;
-    let url_help = `https://api.whatsapp.com/send?phone=+5527988547444&text=Olá me chamo ${perfil.name} e estou com uma dúvida na aula de ${current_unit.current.unit.title}`;
+    // const has_next =
+    //   Object.keys(current_unit.currentNext).length !== 0 &&
+    //   current_unit.currentNext.unit.is_lock === false
+    //     ? true
+    //     : false;
+    // const has_prev =
+    //   Object.keys(current_unit.currentPrevious).length !== 0 &&
+    //   current_unit.currentPrevious.unit.is_lock === false
+    //     ? true
+    //     : false;
+    let url_help = `https://api.whatsapp.com/send?phone=+5527988547444&text=Olá me chamo ${perfil.name} e estou com uma dúvida na aula de ${current_unit.title}`;
 
-    if (current_unit.current.unit.video.is_timer) {
+    if (current_unit.video.is_timer) {
       return (
         <div>
-          asdasdasd
-          <Timer string_timer={timerString} tubnaill={current_unit.current.unit.video.tubnaill} />
+          <Timer string_timer={timerString} tubnaill={current_unit.video.tubnaill} />
         </div>
       );
     } else {
@@ -267,14 +271,14 @@ function Aula({
               className="gridNavigation"
               style={{
                 textAlign: "left",
-                cursor: has_prev ? "pointer" : "not-allowed",
+                // cursor: has_prev ? "pointer" : "not-allowed",
               }}
               onClick={goPrevious}
             >
               <IconButton
                 aria-label="delete"
                 className={classes.margin}
-                disabled={!has_prev}
+                // disabled={!has_prev}
               >
                 <ArrowBackIosIcon fontSize="large" style={{ color: "white" }} />
                 <Typography style={{ color: "white" }}>Anterior</Typography>
@@ -288,14 +292,14 @@ function Aula({
               className="gridNavigation"
               style={{
                 textAlign: "right",
-                cursor: has_next ? "pointer" : "not-allowed",
+                // cursor: has_next ? "pointer" : "not-allowed",
               }}
               onClick={goNext}
             >
               <IconButton
                 aria-label="delete"
                 className={classes.margin}
-                disabled={!has_prev}
+                // disabled={!has_prev}
               >
                 <Typography style={{ color: "white" }}>Próximo</Typography>
                 <ArrowForwardIosIcon
@@ -306,8 +310,8 @@ function Aula({
             </Grid>
 
             <Grid container style={{ backgroundColor: "#111" }}>
-              {typeof current_unit.current.unit.video !== "undefined" ? (
-                current_unit.current.unit.video.type ===
+              {typeof current_unit.video !== "undefined" ? (
+                current_unit.video.type ===
                 "application/x-mpegURL" ? (
                   <div className="gridVideo">
                     <Player
@@ -315,7 +319,7 @@ function Aula({
                       controls
                       sources={[
                         {
-                          src: current_unit.current.unit.video.url,
+                          src: current_unit.video.url,
                           type: "application/x-mpegURL",
                         },
                       ]}
@@ -324,7 +328,7 @@ function Aula({
                 ) : (
                   <div className="gridVideo">
                     <YouTube
-                      videoId={current_unit.current.unit.video.url}
+                      videoId={current_unit.video.url}
                       onEnd={setViweded}
                       style={{ maxWidth: 1080, width: "100%", height: "100%" }}
                     />
@@ -338,7 +342,7 @@ function Aula({
                 <button
                   onClick={setViweded}
                   className={
-                    current_unit.current.unit.finished
+                    current_unit.finished
                       ? "buttonClass check"
                       : "buttonClass nocheck"
                   }
@@ -346,12 +350,12 @@ function Aula({
                   <CheckCircle
                     style={{
                       marginRight: 10,
-                      color: current_unit.current.unit.finished
+                      color: current_unit.finished
                         ? "#FDFDFD"
                         : "#FDFDFD",
                     }}
                   />
-                  {current_unit.current.unit.finished
+                  {current_unit.finished
                     ? "Marcar como não concluída"
                     : "Marcar como concluída"}
                 </button>
@@ -379,14 +383,14 @@ function Aula({
               xs={12}
               className={"gridClassTitle"}
             >
-              <h3 className="titleVideo">{current_unit.current.unit.title}</h3>
+              <h3 className="titleVideo">{current_unit.title}</h3>
             </Grid>
 
-            {current_unit.current.unit.description !== null ? (
+            {current_unit.description !== null ? (
               <div>
                 {/* <Grid item lg={1} xs={1} /> */}
                 <Grid item lg={10} xs={10}>
-                  {current_unit.current.unit.description}
+                  {current_unit.description}
                 </Grid>
                 <Grid item lg={1} xs={1} />
               </div>
@@ -395,8 +399,8 @@ function Aula({
             {/* // {current_unit.current.unit.files.length > 0 ? <Typography>Leitura complementar</Typography> : null} */}
             <Grid container></Grid>
             <Grid container>
-              {current_unit.current.unit.files.length > 0
-                ? current_unit.current.unit.files.map((file, index) => (
+              {current_unit.files.length > 0
+                ? current_unit.files.map((file, index) => (
                     <Grid item xs={12} md={2} l={4} key={`file_${index}`}>
                       <a
                         href={file.url}
