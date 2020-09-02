@@ -3,7 +3,7 @@ import { errorMessage } from '../services/messageService';
 import { logout } from '../services/auth';
 export const TOKEN_KEY = "@adrockets-Token";
 
-const baseURLTest = "https://8a38cbcf3221.ngrok.io/v0";
+const baseURLTest = "http://206.81.13.199:5000/v0";
 const baseURL = "https://api.adgrouptraining.com.br/v0";
 const api = axios.create({
     // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/v0' : 'https://api.adgrouptraining.com/v0'

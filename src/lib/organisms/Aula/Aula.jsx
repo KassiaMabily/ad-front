@@ -251,7 +251,7 @@ function Aula({
     //   current_unit.currentPrevious.unit.is_lock === false
     //     ? true
     //     : false;
-    let url_help = `https://api.whatsapp.com/send?phone=+5527988547444&text=Olá me chamo ${perfil.name} e estou com uma dúvida na aula de ${current_unit.title}`;
+    let url_help = `https://api.whatsapp.com/send?phone=+5527988547444&text=Olá me chamo ${perfil.name}. Vim pela aula de ${current_unit.title}`;
 
     if (current_unit.video.is_timer) {
       return (
@@ -273,7 +273,7 @@ function Aula({
                 textAlign: "left",
                 // cursor: has_prev ? "pointer" : "not-allowed",
               }}
-              onClick={goPrevious}
+              // onClick={goPrevious}
             >
               <IconButton
                 aria-label="delete"
@@ -294,7 +294,7 @@ function Aula({
                 textAlign: "right",
                 // cursor: has_next ? "pointer" : "not-allowed",
               }}
-              onClick={goNext}
+              // onClick={goNext}
             >
               <IconButton
                 aria-label="delete"

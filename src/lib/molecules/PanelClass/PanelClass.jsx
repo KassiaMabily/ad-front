@@ -59,7 +59,7 @@ function PanelClass({
   }, [getUserCourseUnits]);
 
   const unitClick = async (modulo, unit) => {
-    if (!unit.is_lock) {
+    if (unit.is_lock) {
       localStorage.setItem(MODULO_KEY, modulo.hash);
       localStorage.setItem(UNIT_KEY, unit.hash);
       if (type === "sidebar") {
@@ -119,7 +119,7 @@ function PanelClass({
                     onClick={() => unitClick(item, unit)}
                     button
                     key={`panel-${index}-listitem-${index2}`}
-                    style={{ cursor: unit.is_lock ? "not-allowed" : "pointer" }}
+                    style={{ cursor: unit.is_lock == "true" ? "not-allowed" : "pointer" }}
                   >
                     <ListItemIcon>
                       {unit.finished ? (
@@ -133,8 +133,8 @@ function PanelClass({
                     <ListItemText
                       primary={unit.title}
                       secondary={
-                        unit.day_released !== null
-                          ? "Disponível a partir de " + unit.day_released
+                        unit.release_datetime !== null
+                          ? "Disponível a partir de " + unit.release_datetime
                           : null
                       }
                     />
