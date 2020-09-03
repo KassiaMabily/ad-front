@@ -120,9 +120,9 @@ function Aula({
   const [timerCurrent, setTimerCurrent] = useState(
     current_unit.video.release_datetime
   );
+
+  const [showAlert, setShowAlert] = useState(false);
   // current_unit.current.unit.video.datetime_release
-
-
 
   const [timerString, setTimerStrig] = useState("");
   // const [showTimer, setShowTimer] = useState(false);
@@ -145,19 +145,34 @@ function Aula({
   //função para setar a aula como vizualizada
   const setViweded = async () => {
     setLoading(true);
-    
+    // alert('ESTA OPÇÃO ESTARÁ DISPONÍVEL ÀS 20:30hs\n Atualização Em andamento.')
+    // setLoading(false);
+    // return
+
     const hash_course = getKey(COURSE_KEY);
     const hash_modulo = getKey(MODULO_KEY);
     const hash_unit = getKey(UNIT_KEY);
     setFinishedUnit(hash_course, hash_modulo, hash_unit, "button").then((_) => {
       getUserCourseUnits(hash_course);
       setLoading(false);
-      goNext();
+      if (!current_unit.finished) {
+        setShowAlert(true);
+      } else {
+        alert("Tudo pronto para você rever essa aula.");
+        window.location.reload();
+      }
+      // goNext();
     });
   };
 
   //função para ir para a aula anterior
   const goPrevious = async () => {
+    setLoading(true);
+    alert(
+      "Esta opção não está disponível no momento selecione no menu ao lado."
+    );
+    setLoading(false);
+    return;
     const hash_course = getKey(COURSE_KEY);
     if (
       Object.keys(current_unit.currentPrevious).length !== 0 &&
@@ -179,6 +194,12 @@ function Aula({
 
   //função para avançar para a próxima aula
   const goNext = async () => {
+    setLoading(true);
+    alert(
+      "Esta opção não está disponível no momento selecione no menu ao lado."
+    );
+    setLoading(false);
+    return;
     const hash_course = getKey(COURSE_KEY);
     if (
       Object.keys(current_unit.currentNext).length !== 0 &&
@@ -224,6 +245,32 @@ function Aula({
     }
   }, 1000);
 
+  const ALERT_VIEWDED = ({ showAlert, title, text, buttonAction }) => {
+    if (showAlert) {
+      return (
+        <div className="backdrop-loading">
+          <div className="box-alert">
+            <div>
+              <h1>{title}</h1>
+              <p>{text}</p>
+            </div>
+
+            <div className="box-btns">
+              <button className="button-alert" onClick={() => buttonAction()}>
+                Ok, próxima.
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const showAlertF = () => {
+    setShowAlert(false);
+  };
+
   if (current_unit !== undefined) {
     setLoading(false);
     // if (
@@ -256,12 +303,21 @@ function Aula({
     if (current_unit.video.is_timer) {
       return (
         <div>
-          <Timer string_timer={timerString} tubnaill={current_unit.video.tubnaill} />
+          <Timer
+            string_timer={timerString}
+            tubnaill={current_unit.video.tubnaill}
+          />
         </div>
       );
     } else {
       return (
         <div>
+          <ALERT_VIEWDED
+            showAlert={showAlert}
+            title="Parabéns!"
+            text="Meu nobre!! Mais uma aula concluída com sucesso. Mas não pare, seu progresso depende da sua consistência."
+            buttonAction={() => setShowAlert(false)}
+          />
           <Grid container spacing={0} justify="center" alignItems="center">
             <Grid
               item
@@ -311,8 +367,7 @@ function Aula({
 
             <Grid container style={{ backgroundColor: "#111" }}>
               {typeof current_unit.video !== "undefined" ? (
-                current_unit.video.type ===
-                "application/x-mpegURL" ? (
+                current_unit.video.type === "application/x-mpegURL" ? (
                   <div className="gridVideo">
                     <Player
                       autoplay
@@ -326,13 +381,13 @@ function Aula({
                     />
                   </div>
                 ) : (
-                  <div className="gridVideo">
+                  // <div className="gridVideo">
                     <YouTube
                       videoId={current_unit.video.url}
                       onEnd={setViweded}
-                      style={{ maxWidth: 1080, width: "100%", height: "100%" }}
+                      className="YouTube"
                     />
-                  </div>
+                  // </div>
                 )
               ) : null}
 
@@ -350,9 +405,7 @@ function Aula({
                   <CheckCircle
                     style={{
                       marginRight: 10,
-                      color: current_unit.finished
-                        ? "#FDFDFD"
-                        : "#FDFDFD",
+                      color: current_unit.finished ? "#FDFDFD" : "#FDFDFD",
                     }}
                   />
                   {current_unit.finished

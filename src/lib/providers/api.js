@@ -8,7 +8,7 @@ const baseURL = "https://api.adgrouptraining.com.br/v0";
 const api = axios.create({
     // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/v0' : 'https://api.adgrouptraining.com/v0'
     // baseURL: 'http://18.219.149.117/v0'
-    baseURL: baseURLTest
+    baseURL: baseURL
 });
 
 api.interceptors.request.use((config) => {
