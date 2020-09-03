@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
+import TagManager from "react-gtm-module";
 
 import {
   COURSE_KEY,
@@ -152,17 +153,24 @@ function Aula({
     const hash_course = getKey(COURSE_KEY);
     const hash_modulo = getKey(MODULO_KEY);
     const hash_unit = getKey(UNIT_KEY);
-    setFinishedUnit(hash_course, hash_modulo, hash_unit, "button").then((_) => {
-      getUserCourseUnits(hash_course);
-      setLoading(false);
-      if (!current_unit.finished) {
-        setShowAlert(true);
-      } else {
-        alert("Tudo pronto para você rever essa aula.");
-        window.location.reload();
+    setFinishedUnit(hash_course, hash_modulo, hash_unit, "button").then(
+      async (_) => {
+        getUserCourseUnits(hash_course);
+        setLoading(false);
+        if (!current_unit.finished) {
+          setShowAlert(true);
+          await TagManager.dataLayer({
+            dataLayer: {
+              event: "aula_concluida",
+            },
+          });
+        } else {
+          alert("Tudo pronto para você rever essa aula.");
+          window.location.reload();
+        }
+        // goNext();
       }
-      // goNext();
-    });
+    );
   };
 
   //função para ir para a aula anterior
@@ -265,10 +273,6 @@ function Aula({
       );
     }
     return null;
-  };
-
-  const showAlertF = () => {
-    setShowAlert(false);
   };
 
   if (current_unit !== undefined) {
@@ -382,11 +386,11 @@ function Aula({
                   </div>
                 ) : (
                   // <div className="gridVideo">
-                    <YouTube
-                      videoId={current_unit.video.url}
-                      onEnd={setViweded}
-                      className="YouTube"
-                    />
+                  <YouTube
+                    videoId={current_unit.video.url}
+                    onEnd={setViweded}
+                    className="YouTube"
+                  />
                   // </div>
                 )
               ) : null}
