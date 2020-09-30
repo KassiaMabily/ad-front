@@ -33,6 +33,8 @@ import { CloudDownload } from "@material-ui/icons";
 import string_to_slug from "../../assets/Functions";
 import YouTube from "react-youtube";
 
+import { getUnitComments } from "../../services/courseService";
+
 import "./aula.css";
 import { Typography } from "@material-ui/core";
 
@@ -56,55 +58,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// function useHookWithRefCallback(
-//   getUnit,
-//   setFinishedUnit,
-//   setLoading,
-//   getUserCourseUnits
-// ) {
-//   const ref = useRef(null);
-
-//   const setRef = useCallback(
-//     (node) => {
-//       const setViweded = async () => {
-//         setLoading(true);
-//         const hash_course = getKey(COURSE_KEY);
-//         const hash_unit = getKey(UNIT_KEY);
-//         const next_unit = JSON.parse(getKey(NEXT_UNIT_KEY));
-//         const hash_modulo = getKey(MODULO_KEY);
-//         setFinishedUnit(hash_course, hash_modulo, hash_unit, "video")
-//           .then((_) => {
-//             getUserCourseUnits(hash_course);
-//             setLoading(false);
-//             if (Object.keys(next_unit).length !== 0) {
-//               getUnit(hash_course, next_unit.hash);
-//               localStorage.setItem(UNIT_KEY, next_unit.hash);
-//               window.location.pathname =
-//                 window.location.pathname.split("/").slice(0, -1).join("/") +
-//                 "/" +
-//                 next_unit.slug;
-//             }
-//           })
-//           .catch((error) => {
-//             setLoading(false);
-//           });
-//       };
-
-//       if (ref.current) {
-//         ref.current.removeEventListener("ended", setViweded);
-//       }
-
-//       if (node) {
-//         node.addEventListener("ended", setViweded);
-//       }
-//       ref.current = node;
-//     },
-//     [setFinishedUnit, getUnit, setLoading, getUserCourseUnits]
-//   );
-
-//   return [setRef];
-// }
-
 function Aula({
   history,
   current_unit,
@@ -126,7 +79,7 @@ function Aula({
   // current_unit.current.unit.video.datetime_release
 
   const [timerString, setTimerStrig] = useState("");
-  // const [showTimer, setShowTimer] = useState(false);
+  const [comments, setComments] = useState([]);
 
   // const [ref] = useHookWithRefCallback(
   //   getUnit,
@@ -140,7 +93,15 @@ function Aula({
       setLoading(true);
       await getUser();
     }
+
+    async function loadComments() {
+      const comments = await getUnitComments();
+      setComments(comments)
+      console.log(comments);
+    }
+
     userData();
+    loadComments('4','146');
   }, [setLoading, getUser]);
 
   //função para setar a aula como vizualizada
@@ -471,6 +432,27 @@ function Aula({
                           {file.name}
                         </button>
                       </a>
+                    </Grid>
+                  ))
+                : null}
+            </Grid>
+            <Grid container>
+              <h3>Criar comentário:</h3>
+              <textarea>
+                
+              </textarea>
+              <button onClick={()=> { postComment('4', '146',{body: 'NOVO COMENTÁRIO'})}}>Enviar</button>
+            </Grid>
+            <Grid container>
+              {comments.length > 0
+                ? comments.map((comment, index) => (
+                    <Grid item xs={12} md={2} l={4} key={`comment_${index}`}>
+                      <h3>
+                        {comment.author}
+                      </h3>
+                      <p>
+                        {comment.body}
+                      </p>
                     </Grid>
                   ))
                 : null}

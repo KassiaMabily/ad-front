@@ -52,6 +52,15 @@ export const getUnitData = async (hash_course, hash_unit) => {
     return data.data;
 };
 
+export const getUnitComments = async (hash_course, hash_unit) => {
+
+    const { data } = await api.get(`/user/comment/course/4/unit/146/`, {});
+
+
+    return data.data;
+};
+
+
 export const setFinishedUnitData = async (hash_course, hash_unit, type) => {
     if(type === "button"){
         const { data } = await api.put(`/user/progress/course/${hash_course}/unit/${hash_unit}/`, {});
