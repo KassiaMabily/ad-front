@@ -137,7 +137,7 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history, setOpenPasswo
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Conta</MenuItem>
+            {/* <MenuItem onClick={handleMenuClose}>Conta</MenuItem>  */}
             <MenuItem onClick={()=>setOpenPassword(true)}>Alterar senha</MenuItem>
             <MenuItem onClick={() => history.push('/') }>Meus cursos</MenuItem>
             <MenuItem onClick={handleLogout}>Sair</MenuItem>
@@ -192,7 +192,7 @@ function Navbar({ showMenu, openMenu, nameCourse, perfil, history, setOpenPasswo
                             : null
                         }
                         <Typography onClick={() => history.push('/') } className={classes.title} variant="h6" noWrap>
-                            <img src="https://api.adgrouptraining.com/v0/static/img/logos/logo-new.png" style={{ height: 50, marginTop: 10 }} alt="ADGroup Training"/>
+                            <img src="https://api.adgrouptraining.com.br/v0/static/img/logos/logo-new.png" style={{ height: 50, marginTop: 10 }} alt="ADGroup Training"/>
                         </Typography>
                     </div>
                     <div className={classes.grow} />

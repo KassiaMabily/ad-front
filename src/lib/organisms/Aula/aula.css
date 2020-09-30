@@ -1,142 +1,222 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap");
 .buttonClass {
-    width: 100%;
-    max-width: 340px;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: transparent;
-    border: 2px solid #FDFDFD;
-    display: flex;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    transition: box-shadow .2s ease-in-out;
-    color: #FDFDFD;
-    margin: 10px;
+  width: 100%;
+  max-width: 340px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid #fdfdfd;
+  display: flex;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  transition: box-shadow 0.2s ease-in-out;
+  color: #fdfdfd;
+  margin: 10px;
 }
 
 .bntLinkFiles {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    cursor: pointer;
-    background: #DDD;
-    padding: 20px;
-    border-radius: 5px;
-    border: 0;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    transition: box-shadow .2s ease-in-out;
-    color: #000000;
-    text-align: left;
-    margin: 10px;
-    box-shadow: 1px 1px 3px #9999;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  background: #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  border: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  transition: box-shadow 0.2s ease-in-out;
+  color: #000000;
+  text-align: left;
+  margin: 10px;
+  box-shadow: 1px 1px 3px #9999;
 }
 
 .bntLinkFiles:hover {
-    box-shadow: 3px 3px 10px #1115
+  box-shadow: 3px 3px 10px #1115;
 }
 
 .gridButtons {
-    /* background-color: #0004; */
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row;
+  /* background-color: #0004; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
 }
 
 .check {
-    color: #FDFDFD;
-    border: 2px solid #FDFDFD;
+  color: #fdfdfd;
+  border: 2px solid #fdfdfd;
 }
 
 .nocheck {
-    color: #FDFDFD;
+  color: #fdfdfd;
 }
 
 .nocheck:hover {
-    box-shadow: 0px 0px 20px #FDFDFD;
-    border-radius: 7px;
-    border: 2px solid #FDFDFD;
-    color: #FDFDFD;
+  box-shadow: 0px 0px 20px #fdfdfd;
+  border-radius: 7px;
+  border: 2px solid #fdfdfd;
+  color: #fdfdfd;
 }
 
 .buttonClass:hover {
-    box-shadow: 0px 0px 20px #FDFDFD;
-    border-radius: 7px;
-    border: 2px solid #FDFDFD;
-    color: #FDFDFD;
+  box-shadow: 0px 0px 20px #fdfdfd;
+  border-radius: 7px;
+  border: 2px solid #fdfdfd;
+  color: #fdfdfd;
 }
 
 .gridClassTitle {
-    text-align: left;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #594E4E;
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #594e4e;
 }
 
 .titleVideo {
-    font-family: 'Roboto', 'Montserrat';
-    font-weight: 300;
-    font-size: 25px;
-    color: #594E4E;
+  font-family: "Roboto", "Montserrat";
+  font-weight: 300;
+  font-size: 25px;
+  color: #594e4e;
 }
 
 .comments {
-    font-family: 'Roboto', 'Montserrat';
-    font-weight: 300;
-    font-size: 25px;
-    color: #594E4E;
+  font-family: "Roboto", "Montserrat";
+  font-weight: 300;
+  font-size: 25px;
+  color: #594e4e;
 }
 
 .gridNavigation {
-    height: 70px;
-    background-color: #131414;
-    margin-top: 60px !important;
+  height: 70px;
+  background-color: #131414;
+  margin-top: 60px !important;
 }
 
 .gridVideo {
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #111;
+  text-align: center;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  /* background-color: #1F1; */
+  max-width: 50%;
+}
+
+@media only screen and (min-width: 901px) {
+  .gridVideo .video-js {
+    width: 50vw !important;
+    height: 27.5vw !important;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .gridVideo .video-js {
+    width: 100vw !important;
+    height: 56vw !important;
+  }
 }
 
 .boxComment {
-    display: flex;
-    margin-bottom: 15px;
+  display: flex;
+  margin-bottom: 15px;
 }
 
 .boxReplies {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .boxComment .author {
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    color: #000;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: #000;
 }
 
 .detetime {
-    font-family: 'Roboto', sans-serif;
-    font-size: 30px;
-    color: #131313AA;
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+  color: #131313aa;
 }
 
 .message {
-    margin-top: 10px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    color: #333333;
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: #333333;
 }
 
 .containerComments {
-    border-bottom: 1px solid rgba(159, 167, 172, 0.253);
-    padding-bottom: 10px;
+  border-bottom: 1px solid rgba(159, 167, 172, 0.253);
+  padding-bottom: 10px;
+}
+
+.box-alert {
+  border-radius: 15px;
+  width: 290px;
+  min-height: 200px;
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  box-shadow: 5px 5px 5px black ;
+}
+
+.box-alert h1 {
+  color: #555555;
+}
+
+
+.box-alert p{
+    font-style: italic ;
+    font-size: large;
+}
+.box-alert .box-btns {
+  display: flex;
+  justify-content: flex-end;
+
+  width: 100%;
+}
+
+.box-alert .button-alert {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+}
+
+.button-alert {
+  transition-duration: 0.4s;
+}
+
+.button-alert:hover {
+  background-color: #ffffff; /* Green */
+  color: #111111;
+  border: 1px solid #4caf50;
+}
+
+
+.YouTube{
+    width: 40vw;
+    max-width: 1080px;
+}
+
+@media (max-width: 760px) {
+    .YouTube{
+        width: 100vw
+    }
+    
 }

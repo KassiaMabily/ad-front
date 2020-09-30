@@ -42,7 +42,7 @@ function CardCourse({ item_course, type, index, history }) {
                 <div className="info_course_ctnr" onClick={ () => courseClick(item_course) }>
                     <div>
                         <div className="name_course">{item_course.title}</div>
-                        <div className="name_producer">{item_course.producer.name}</div>
+                        <div className="name_producer">{item_course.producer}</div>
                     </div>
                     {
                         type === 'offer' ? null : <Info className="info" />

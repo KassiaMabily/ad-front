@@ -38,7 +38,7 @@ function RegisterForm({ history, setLoading }) {
                 setLoading(false);
                 MySwal.fire({
                     title: "Sucesso",
-                    text: "Cadastro realizado",
+                    text: "Cadastro realizado. Confira seu email, te enviamos um email de confirmação.",
                     type: 'success',
                     allowOutsideClick: false,
                     showCancelButton: false,

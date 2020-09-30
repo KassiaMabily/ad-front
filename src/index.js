@@ -4,9 +4,18 @@ import App from './lib/app';
 import { Provider } from 'react-redux';
 import './index.css';
 import store from './redux/store';
+import TagManager from "react-gtm-module";
 import '../node_modules/toastr/build/toastr.min.css';
 
 const root = document.getElementById('root');
+
+
+
+const tagManagerArgs = {
+  gtmId: 'GTM-WBMPP2K'
+}
+
+TagManager.initialize(tagManagerArgs)
 
 
 ReactDOM.render(

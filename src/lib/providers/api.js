@@ -2,10 +2,13 @@ import axios from 'axios';
 import { errorMessage } from '../services/messageService';
 import { logout } from '../services/auth';
 export const TOKEN_KEY = "@adrockets-Token";
+
+const baseURLTest = "https://b6a350bb7d35.ngrok.io/v0";
+const baseURL = "https://api.adgrouptraining.com.br/v0";
 const api = axios.create({
     // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/v0' : 'https://api.adgrouptraining.com/v0'
     // baseURL: 'http://18.219.149.117/v0'
-    baseURL: 'https://api.adgrouptraining.com/v0'
+    baseURL: baseURLTest
 });
 
 api.interceptors.request.use((config) => {
@@ -31,11 +34,14 @@ api.interceptors.response.use((response) => {
             errorMessage('', 'Ocorreu um erro inesperado.');
         } else if (error.response.status === 401) {
             errorMessage('', error.response.data.message);
-            if(error.response.data.message === "ERROR: Token do usuario invalido"){
-                logout();
-                window.location.reload();
-            }
+            // if (error.response.data.message === "ERROR: Token do usuario invalido") {
+            //     logout();
+            //     window.location.reload();
+            // }
         }
+        //independente do erro sempre fará o logout (limpar o localStorage)
+        logout();
+        window.location.reload();
     }
 
     return Promise.reject(error);

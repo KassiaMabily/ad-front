@@ -27,13 +27,8 @@ export const CourseReducer = (state = initialState, action) => {
 				...state,
 				current_unit: { 
 					...state.current_unit, 
-					current: { 
-						...state.current_unit.current, 
-						unit: { 
-							...state.current_unit.current.unit,
-							finished: finished
-						}
-					} 
+					finished: finished,
+					 
 				}
 			};
 

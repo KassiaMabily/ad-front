@@ -144,8 +144,13 @@
 }
 
 .logoLogin {
+    width: auto !important;
+    height: 85px !important;
+}
+
+.logoLoginAd {
     width: auto;
-    height: 100px;
+    height: 65px;
 }
 
 .inputs {
